@@ -19,12 +19,12 @@ export function getViewportRect () {
   const viewportB = (viewportT + viewportH)
 
   return {
-    width: viewportW,
-    height: viewportH,
     top: viewportT,
     right: viewportR,
     bottom: viewportB,
-    left: viewportL
+    left: viewportL,
+    width: viewportW,
+    height: viewportH
   }
 }
 
@@ -48,14 +48,14 @@ export function getContainerRect (container) {
   const containerB = (containerT + containerH)
 
   return {
-    width: containerW,
-    height: containerH,
     x: containerX,
     y: containerY,
     top: containerT,
     right: containerR,
     bottom: containerB,
-    left: containerL
+    left: containerL,
+    width: containerW,
+    height: containerH
   }
 }
 
@@ -81,9 +81,9 @@ export function getRects (container, target) {
 
 export function calculateLeft ({
   viewport: {
-    height: viewportH,
     left: viewportL,
-    right: viewportR
+    right: viewportR,
+    height: viewportH
   },
   container: {
     left: containerL,
@@ -149,9 +149,9 @@ export function calculateLeft ({
 
 export function calculateTop ({
   viewport: {
-    height: viewportH,
     top: viewportT,
-    bottom: viewportB
+    bottom: viewportB,
+    height: viewportH
   },
   container: {
     top: containerT,
