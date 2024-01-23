@@ -1,0 +1,174 @@
+<html>
+	<head>
+		<script type="importmap">
+			{
+				"imports": {
+					"center-center": "https://esm.sh/gh/sequencemedia/center-center"
+				}
+			}
+		</script>
+		<script type="module">
+			import {
+				getRects,
+				calculateLeft,
+				calculateTop
+			} from 'center-center'
+
+			document.addEventListener('DOMContentLoaded', () => {
+				console.log('DOM CONTENT LOADED')
+
+				const container = document.querySelector('.middle')
+				const target = container.querySelector('.tracker')
+
+				const coordinates = getRects(container, target)
+				const left = calculateLeft(coordinates)
+				const top = calculateTop(coordinates)
+
+				window.requestAnimationFrame(() => {
+					target.style.left = left + 'px'
+					target.style.top = top + 'px'
+				})
+			})
+
+			window.addEventListener('scroll', () => {
+				console.log('SCROLL')
+
+				const container = document.querySelector('.middle')
+				const target = container.querySelector('.tracker')
+
+				const coordinates = getRects(container, target)
+				const left = calculateLeft(coordinates)
+				const top = calculateTop(coordinates)
+
+				window.requestAnimationFrame(() => {
+					target.style.left = left + 'px'
+					target.style.top = top + 'px'
+				})
+			})
+
+			window.addEventListener('resize', () => {
+				console.log('RESIZE')
+
+				const container = document.querySelector('.middle')
+				const target = container.querySelector('.tracker')
+
+				const coordinates = getRects(container, target)
+				const left = calculateLeft(coordinates)
+				const top = calculateTop(coordinates)
+
+				window.requestAnimationFrame(() => {
+					target.style.left = left + 'px'
+					target.style.top = top + 'px'
+				})
+
+				/*
+				console.log(
+					window.getComputedStyle(document.querySelector('.middle .tracker')).getPropertyValue('top'),
+					window.getComputedStyle(document.querySelector('.middle .tracker')).getPropertyValue('left')
+				) */
+
+				// window.requestAnimationFrame(track)
+			})
+
+
+		</script>
+		<style>
+
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+			}
+
+			.container {
+				display: flex;
+				flex-direction: column;
+
+				background-color: red;
+				width: fit-content;
+				height: fit-content;
+				min-width: 900px;
+			}
+
+			.top {
+				flex: 0 0 auto;
+				width: 100%;
+
+				min-height: 900px;
+
+				background-color: green;
+			}
+
+			.middle {
+				position: relative;
+
+				flex: 1;
+
+				background-color: white;
+
+				margin: 3rem ;
+			}
+
+			.middle .tracker {
+				position: absolute;
+
+				left: 0;
+				top: 0;
+
+				width: 50px;
+				height: 50px;
+
+				background-color: gold;
+
+				overflow: hidden;
+			}
+
+			.bottom {
+				flex: 0 0 auto;
+				width: 100%;
+
+				min-height: 900px;
+
+				background-color: green;
+			}
+
+		</style>
+	</head><body>
+		<div class="container">
+			<header class="top">
+				<h1>Center Center</h1>
+			</header>
+
+			<main class="middle">
+
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec nulla metus. Vivamus quis nisi ut elit pretium consectetur. Aliquam erat volutpat. Curabitur ornare massa sed ligula pretium bibendum. Vivamus condimentum eget lectus a volutpat. Maecenas ut massa in est lacinia molestie eget non arcu. Donec condimentum tincidunt tellus ac pellentesque. Curabitur augue nunc, vestibulum non aliquet eu, bibendum quis urna. Mauris volutpat vitae enim nec lobortis. Proin vitae nisl ac libero finibus pretium. Fusce ac lorem sed ex aliquet volutpat. Nullam vel est ut massa pharetra posuere. Aliquam sem ipsum, egestas eu velit auctor, ullamcorper laoreet est. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In accumsan mauris nec sem ultrices ullamcorper.</p>
+
+				<p>Maecenas feugiat risus ipsum, at facilisis dui molestie at. Curabitur eros diam, suscipit vitae sem sit amet, rhoncus varius arcu. Donec ultrices nisi nec scelerisque ornare. Nunc placerat tellus quis diam lobortis rhoncus. Proin convallis ultricies sollicitudin. Cras dictum lorem arcu, sit amet congue leo semper at. Etiam ultricies maximus velit, id facilisis orci suscipit eu. Fusce velit odio, consectetur ut laoreet quis, lobortis eu purus. Aliquam vel porttitor odio.</p>
+
+				<p>Maecenas eget lacus cursus justo accumsan pharetra vitae non purus. Nam risus risus, varius id lacus id, vestibulum porta turpis. Vestibulum varius odio ac purus viverra molestie. Nulla semper lectus non volutpat pharetra. Cras sed turpis eu lacus pharetra elementum id vitae dui. Praesent auctor felis a risus ultrices, quis aliquam velit auctor. Sed sagittis non augue in imperdiet. Aenean eget commodo urna. Mauris varius pulvinar nulla, vel aliquet justo malesuada eget. Pellentesque efficitur est at nunc rhoncus, sed ultrices lectus venenatis.</p>
+
+				<p>Mauris erat lorem, lobortis quis ligula et, commodo malesuada sem. Quisque pulvinar nec orci at vehicula. Donec a tempor nisl. Nam nec nibh cursus odio auctor pretium. Maecenas elementum in ante vitae venenatis. In bibendum tristique augue, in rhoncus neque semper eu. Aliquam rhoncus dignissim fermentum. Donec finibus neque velit, eget interdum nunc condimentum eu. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse ornare metus nisl, eget vulputate massa auctor id. Fusce tincidunt eros sit amet sapien gravida, a lacinia quam laoreet.</p>
+
+				<p>Suspendisse ut tortor vel libero facilisis hendrerit quis vel mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet justo eget mauris lobortis luctus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc non lectus maximus, ultrices mauris sollicitudin, aliquet diam. Cras suscipit eros ac sagittis malesuada. Curabitur auctor ex sit amet metus imperdiet consequat. Aenean accumsan dictum augue. Etiam massa ex, mollis vitae tempus sed, ultricies ac sapien. Donec eu laoreet nisl. Nullam suscipit tincidunt eleifend.</p>
+
+				<p>Nam sed nisi id lacus lacinia ultrices efficitur ut dolor. Nam quis nibh porttitor, dictum magna tincidunt, tristique leo. Praesent vitae est ultricies, feugiat felis ac, euismod massa. In finibus, enim in feugiat fermentum, ante felis luctus turpis, et finibus risus metus sed mauris. Donec aliquet rutrum orci, et aliquam nisl rhoncus et. Integer dignissim lacus vitae egestas interdum. Aliquam semper eros eget eros viverra, quis placerat ex ultricies. Suspendisse tempor, justo a facilisis tempus, erat dui imperdiet orci, vel ullamcorper libero eros eu risus. Suspendisse mattis arcu arcu, ut rhoncus lacus semper sed.</p>
+
+				<p>Maecenas tempus lorem quam, sed aliquet erat rhoncus quis. In nibh eros, suscipit id accumsan et, dictum nec neque. Sed vitae ipsum et nisl dignissim molestie. Quisque eu auctor quam. Vestibulum sagittis lobortis ante, eu laoreet arcu pretium eu. In consectetur nisl semper bibendum venenatis. Phasellus non sollicitudin lacus, non efficitur dui. Proin scelerisque nunc ut venenatis sagittis. Integer faucibus diam non tortor pulvinar rutrum.</p>
+
+				<p>Cras fermentum tortor iaculis turpis placerat pellentesque. Curabitur tristique suscipit lorem, et ullamcorper leo faucibus ac. Nullam sit amet nulla eget arcu porttitor interdum eget in ante. Suspendisse tincidunt est et posuere porttitor. Pellentesque non turpis justo. Nunc malesuada ex vel risus pretium sodales. Donec quis condimentum est. Mauris bibendum egestas massa, nec malesuada nulla lobortis eu.</p>
+
+				<p>Sed a lectus feugiat, porttitor turpis ac, porta dui. Duis egestas elementum scelerisque. Pellentesque placerat interdum tortor, id hendrerit tellus tempor sed. Donec eu sapien nulla. Morbi convallis luctus rutrum. Nulla eget ex vel libero maximus vestibulum. Nam pretium maximus porttitor. Vestibulum porta, tellus ut posuere sodales, felis turpis scelerisque lorem, sed venenatis metus nibh ac velit. Donec vitae sollicitudin augue. Proin id ex et odio facilisis facilisis eu ac lectus. Morbi rutrum a metus vel eleifend. Vivamus convallis eros rutrum lectus vestibulum viverra. Sed fringilla pharetra nunc placerat rutrum.</p>
+
+				<p>Nullam auctor augue non tempus porta. Aliquam ante odio, dapibus id purus a, consequat ullamcorper dui. Nunc sodales metus felis, id volutpat lectus imperdiet eu. In lorem diam, luctus a neque convallis, suscipit luctus tortor. Duis tortor sapien, convallis eget placerat quis, volutpat nec velit. Quisque aliquam nunc orci, pharetra placerat orci gravida vitae. Donec eget congue mi. Pellentesque tellus risus, dictum ac ultrices nec, luctus eu mi. Proin sit amet blandit magna. Quisque diam est, rhoncus ut dictum eu, facilisis a ex. Aenean sed nisi sagittis, suscipit magna eu, congue neque. Donec porttitor sapien massa, sit amet pretium turpis rhoncus non. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+
+				<div class="tracker">
+
+				</div>
+			</main>
+
+			<footer class="bottom">
+				<h2>Center Center</h2>
+			</footer>
+		</div>
+	</body>
+</html>

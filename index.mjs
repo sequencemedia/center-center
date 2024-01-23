@@ -1,0 +1,216 @@
+import debug from 'debug'
+
+const log = debug('center-center')
+
+export function getViewportRect () {
+  const {
+    innerWidth: viewportW,
+    innerHeight: viewportH
+  } = window
+
+  const {
+    scrollingElement: {
+      scrollLeft: viewportL,
+      scrollTop: viewportT
+    }
+  } = document
+
+  const viewportR = (viewportL + viewportW)
+  const viewportB = (viewportT + viewportH)
+
+  return {
+    width: viewportW,
+    height: viewportH,
+    top: viewportT,
+    right: viewportR,
+    bottom: viewportB,
+    left: viewportL
+  }
+}
+
+export function getContainerRect (container) {
+  const {
+    offsetLeft: containerL,
+    offsetTop: containerT
+  } = container
+
+  /**
+   * x/top is relative to the viewport
+   */
+  const {
+    x: containerX,
+    y: containerY,
+    width: containerW,
+    height: containerH
+  } = container.getBoundingClientRect()
+
+  const containerR = (containerL + containerW)
+  const containerB = (containerT + containerH)
+
+  return {
+    width: containerW,
+    height: containerH,
+    x: containerX,
+    y: containerY,
+    top: containerT,
+    right: containerR,
+    bottom: containerB,
+    left: containerL
+  }
+}
+
+export function getTargetRect (target) {
+  const {
+    offsetWidth: targetW,
+    offsetHeight: targetH
+  } = target
+
+  return {
+    width: targetW,
+    height: targetH
+  }
+}
+
+export function getRects (container, target) {
+  return {
+    viewport: getViewportRect(),
+    container: getContainerRect(container),
+    target: getTargetRect(target)
+  }
+}
+
+export function calculateLeft ({
+  viewport: {
+    height: viewportH,
+    left: viewportL,
+    right: viewportR
+  },
+  container: {
+    left: containerL,
+    right: containerR,
+    width: containerW
+  },
+  target: {
+    width: targetW
+  }
+}) {
+  if (viewportL > containerL) {
+    if (containerR > viewportL) {
+      if (viewportR > containerR) {
+        log('calculate viewportL to containerR')
+
+        const availableW = Math.max(targetW, (containerL + containerW) - viewportL)
+
+        return (containerW - availableW) + ((availableW / 2) - (targetW / 2))
+      }
+
+      if (containerR > viewportR) {
+        log('calculate viewportL to viewportR')
+
+        const availableW = Math.max(targetW, viewportH)
+
+        return (viewportL - containerL) + ((availableW / 2) - (targetW / 2))
+      }
+    }
+
+    if (viewportL > containerR) {
+      log('pin to right')
+
+      const availableW = Math.max(targetW, containerW)
+
+      /**
+       *  Pin to right
+       */
+      return (availableW - targetW)
+    }
+  }
+
+  if (containerL > viewportL) {
+    if (containerL > viewportR) {
+      log('pin to left')
+
+      /**
+       *  Pin to left
+       *
+       *  Scroll is above container (container is offscreen)
+       */
+      return 0
+    }
+
+    if (viewportR > containerL) {
+      log('calculate containerL to viewportR')
+
+      const availableW = Math.max(targetW, (viewportR - containerL))
+
+      return ((availableW / 2) - (targetW / 2))
+    }
+  }
+}
+
+export function calculateTop ({
+  viewport: {
+    height: viewportH,
+    top: viewportT,
+    bottom: viewportB
+  },
+  container: {
+    top: containerT,
+    bottom: containerB,
+    height: containerH
+  },
+  target: {
+    height: targetH
+  }
+}) {
+  if (viewportT > containerT) {
+    if (containerB > viewportT) {
+      if (viewportB > containerB) {
+        log('calculate viewportT to containerB')
+
+        const availableH = Math.max(targetH, (containerT + containerH) - viewportT)
+
+        return (containerH - availableH) + ((availableH / 2) - (targetH / 2))
+      }
+
+      if (containerB > viewportB) {
+        log('calculate viewportT to viewportB') // , viewportT > containerT, containerB > viewportB)
+
+        const availableH = Math.max(targetH, viewportH)
+
+        return (viewportT - containerT) + ((availableH / 2) - (targetH / 2))
+      }
+    }
+
+    if (viewportT > containerB) {
+      log('pin to bottom')
+
+      const availableH = Math.max(targetH, containerH)
+
+      /**
+       *  Pin to bottom
+       */
+      return (availableH - targetH)
+    }
+  }
+
+  if (containerT > viewportT) {
+    if (containerT > viewportB) {
+      log('pin to top')
+
+      /**
+       *  Pin to top
+       *
+       *  Scroll is above container (container is offscreen)
+       */
+      return 0
+    }
+
+    if (viewportB > containerT) {
+      log('calculate containerT to viewportB')
+
+      const availableH = Math.max(targetH, (viewportB - containerT))
+
+      return ((availableH / 2) - (targetH / 2))
+    }
+  }
+}

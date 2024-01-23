@@ -1,0 +1,30 @@
+{
+  "name": "center-center",
+  "version": "0.0.0",
+  "description": "Position an element at the center center of a container",
+  "private": true,
+  "main": "./index.mjs",
+  "type": "module",
+  "author": {
+    "name": "Jonathan Perry for Sequence Media Limited",
+    "email": "sequencemedia@sequencemedia.net",
+    "url": "http://sequencemedia.net"
+  },
+  "scripts": {
+    "lint": "cross-env NODE_ENV=production eslint . --ext .mjs,.cjs",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "dependencies": {
+    "debug": "^4.3.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.15",
+    "@babel/core": "^7.22.17",
+    "@babel/eslint-parser": "^7.22.15",
+    "@babel/preset-env": "^7.22.15",
+    "core-js": "^3.32.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.49.0",
+    "eslint-config-standard": "^17.1.0"
+  }
+}
