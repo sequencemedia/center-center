@@ -2,6 +2,18 @@ import debug from 'debug'
 
 const log = debug('center-center')
 
+export function getScrollingElement (document) {
+  if (Reflect.has(document, 'scrollingElement')) {
+    const scrollingElement = Reflect.get(document, 'scrollingElement')
+    if (scrollingElement) return scrollingElement
+  }
+
+  return {
+    scrollLeft: 0,
+    scrollTop: 0
+  }
+}
+
 export function getViewportRect () {
   const {
     innerWidth: viewportW,
@@ -9,11 +21,9 @@ export function getViewportRect () {
   } = window
 
   const {
-    scrollingElement: {
-      scrollLeft: viewportL,
-      scrollTop: viewportT
-    }
-  } = document
+    scrollLeft: viewportL,
+    scrollTop: viewportT
+  } = getScrollingElement(document)
 
   const viewportR = (viewportL + viewportW)
   const viewportB = (viewportT + viewportH)
@@ -83,7 +93,7 @@ export function calculateLeft ({
   viewport: {
     left: viewportL,
     right: viewportR,
-    height: viewportH
+    width: viewportW
   },
   container: {
     left: containerL,
@@ -94,6 +104,20 @@ export function calculateLeft ({
     width: targetW
   }
 }) {
+  if (viewportL === containerL) {
+    if (viewportW === containerW) {
+      const availableW = Math.max(targetW, containerW)
+
+      return ((availableW / 2) - (targetW / 2))
+    }
+
+    if (viewportW > containerW) {
+      const availableW = Math.max(targetW, (containerL + containerW))
+
+      return ((availableW / 2) - (targetW / 2))
+    }
+  }
+
   if (viewportL > containerL) {
     if (containerR > viewportL) {
       if (viewportR > containerR) {
@@ -107,7 +131,7 @@ export function calculateLeft ({
       if (containerR > viewportR) {
         log('calculate viewportL to viewportR')
 
-        const availableW = Math.max(targetW, viewportH)
+        const availableW = Math.max(targetW, viewportW)
 
         return (viewportL - containerL) + ((availableW / 2) - (targetW / 2))
       }
@@ -162,6 +186,20 @@ export function calculateTop ({
     height: targetH
   }
 }) {
+  if (viewportT === containerT) {
+    if (viewportH === containerH) {
+      const availableH = Math.max(targetH, containerH)
+
+      return ((availableH / 2) - (targetH / 2))
+    }
+
+    if (viewportB > containerB) {
+      const availableH = Math.max(targetH, (containerT + containerB))
+
+      return ((availableH / 2) - (targetH / 2))
+    }
+  }
+
   if (viewportT > containerT) {
     if (containerB > viewportT) {
       if (viewportB > containerB) {
