@@ -11,7 +11,8 @@
   },
   "scripts": {
     "lint": "cross-env NODE_ENV=production eslint . --ext .mjs,.cjs",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "test": "cross-env NODE_ENV=test mocha test --recursive"
   },
   "dependencies": {
     "debug": "^4.3.4"
@@ -21,9 +22,14 @@
     "@babel/core": "^7.22.17",
     "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
+    "chai": "^5.0.0",
     "core-js": "^3.32.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.49.0",
-    "eslint-config-standard": "^17.1.0"
+    "eslint-config-standard": "^17.1.0",
+    "mocha": "^10.2.0"
+  },
+  "imports": {
+    "#center-center": "./index.mjs"
   }
 }

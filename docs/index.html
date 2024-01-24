@@ -6,7 +6,7 @@
 			{
 				"imports": {
 					"debug": "https://esm.sh/debug",
-					"center-center": "https://esm.sh/gh/sequencemedia/center-center"
+					"center-center": "https://esm.sh/center-center"
 				}
 			}
 		</script>
@@ -38,7 +38,7 @@
 				})
 			})
 
-			window.addEventListener('scroll', () => {
+			function handleScroll () {
 				log('scroll')
 
 				const container = document.querySelector('main')
@@ -53,9 +53,9 @@
 					target.style.left = left + 'px'
 					target.style.top = top + 'px'
 				})
-			})
+			}
 
-			window.addEventListener('resize', () => {
+			function handleResize () {
 				log('resize')
 
 				const container = document.querySelector('main')
@@ -70,7 +70,15 @@
 					target.style.left = left + 'px'
 					target.style.top = top + 'px'
 				})
-			})
+			}
+
+			window.addEventListener('scroll', handleScroll)
+
+			document.addEventListener('scroll', handleScroll)
+
+			window.addEventListener('resize', handleResize)
+
+			document.addEventListener('resize', handleResize)
 
 		</script>
 		<style>
@@ -91,16 +99,20 @@
 				text-size-adjust: 100%;
 			}
 
+			html {
+				overflow: auto
+			}
+
 			html,
 			body {
 				background-color: white;
 				min-height: 100vh;
+				min-height: 844px;
 				max-width: 100vw;
-				min-width: 320px;
+				min-width: 390px;
 				margin: 0;
 				padding: 0;
 				border: none;
-				overflow: auto;
 			}
 
 			.container {

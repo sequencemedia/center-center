@@ -162,11 +162,19 @@ export function calculateLeft ({
     }
 
     if (viewportR > containerL) {
-      log('calculate containerL to viewportR')
+      if (viewportR > containerR) {
+        log('calculate containerL to containerR')
 
-      const availableW = Math.max(targetW, (viewportR - containerL))
+        const availableW = Math.max(targetW, (containerR - containerL))
 
-      return ((availableW / 2) - (targetW / 2))
+        return ((availableW / 2) - (targetW / 2))
+      } else {
+        log('calculate containerL to viewportR')
+
+        const availableW = Math.max(targetW, (viewportR - containerL))
+
+        return ((availableW / 2) - (targetW / 2))
+      }
     }
   }
 }
@@ -244,11 +252,19 @@ export function calculateTop ({
     }
 
     if (viewportB > containerT) {
-      log('calculate containerT to viewportB')
+      if (viewportB > containerB) {
+        log('calculate containerT to containerB')
 
-      const availableH = Math.max(targetH, (viewportB - containerT))
+        const availableH = Math.max(targetH, (containerB - containerT))
 
-      return ((availableH / 2) - (targetH / 2))
+        return ((availableH / 2) - (targetH / 2))
+      } else {
+        log('calculate containerT to viewportB')
+
+        const availableH = Math.max(targetH, (viewportB - containerT))
+
+        return ((availableH / 2) - (targetH / 2))
+      }
     }
   }
 }
