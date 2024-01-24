@@ -5,8 +5,7 @@ import {
 import {
   getScrollingElement,
   getViewportRect,
-  getContainerRect,
-  getTargetRect,
+  getElementRect,
   getRects,
   calculateLeft,
   calculateTop
@@ -17,9 +16,7 @@ describe('`center-center`', () => {
 
   it('exports `getViewportRect`', () => expect(getViewportRect).to.be.a('function'))
 
-  it('exports `getContainerRect`', () => expect(getContainerRect).to.be.a('function'))
-
-  it('exports `getTargetRect`', () => expect(getTargetRect).to.be.a('function'))
+  it('exports `getElementRect`', () => expect(getElementRect).to.be.a('function'))
 
   it('exports `getRects`', () => expect(getRects).to.be.a('function'))
 
@@ -97,49 +94,24 @@ describe('`center-center`', () => {
     }))
   })
 
-  describe('`getTargetRect()`', () => {
-    const mockTarget = {
+  describe('`getElementRect()`', () => {
+    const mockElement = {
+      offsetLeft: 'MOCK OFFSET LEFT',
+      offsetTop: 'MOCK OFFSET TOP',
       offsetWidth: 'MOCK OFFSET WIDTH',
       offsetHeight: 'MOCK OFFSET HEIGHT'
     }
 
     it('returns an object', () => {
       return (
-        expect(getTargetRect(mockTarget))
+        expect(getElementRect(mockElement))
           .to.eql({
-            width: 'MOCK OFFSET WIDTH',
-            height: 'MOCK OFFSET HEIGHT'
-          })
-      )
-    })
-  })
-
-  describe('`getContainerRect()`', () => {
-    const mockContainer = {
-      offsetLeft: 'MOCK OFFSET LEFT',
-      offsetTop: 'MOCK OFFSET TOP',
-      getBoundingClientRect () {
-        return {
-          x: 'MOCK X',
-          y: 'MOCK Y',
-          width: 'MOCK CONTAINER W',
-          height: 'MOCK CONTAINER H'
-        }
-      }
-    }
-
-    it('returns an object', () => {
-      return (
-        expect(getContainerRect(mockContainer))
-          .to.eql({
-            x: 'MOCK X',
-            y: 'MOCK Y',
-            top: 'MOCK OFFSET TOP',
-            right: 'MOCK OFFSET LEFTMOCK CONTAINER W',
-            bottom: 'MOCK OFFSET TOPMOCK CONTAINER H',
             left: 'MOCK OFFSET LEFT',
-            width: 'MOCK CONTAINER W',
-            height: 'MOCK CONTAINER H'
+            top: 'MOCK OFFSET TOP',
+            width: 'MOCK OFFSET WIDTH',
+            height: 'MOCK OFFSET HEIGHT',
+            right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
+            bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
           })
       )
     })
@@ -149,17 +121,13 @@ describe('`center-center`', () => {
     const mockContainer = {
       offsetLeft: 'MOCK OFFSET LEFT',
       offsetTop: 'MOCK OFFSET TOP',
-      getBoundingClientRect () {
-        return {
-          x: 'MOCK X',
-          y: 'MOCK Y',
-          width: 'MOCK CONTAINER W',
-          height: 'MOCK CONTAINER H'
-        }
-      }
+      offsetWidth: 'MOCK OFFSET WIDTH',
+      offsetHeight: 'MOCK OFFSET HEIGHT'
     }
 
     const mockTarget = {
+      offsetLeft: 'MOCK OFFSET LEFT',
+      offsetTop: 'MOCK OFFSET TOP',
       offsetWidth: 'MOCK OFFSET WIDTH',
       offsetHeight: 'MOCK OFFSET HEIGHT'
     }
@@ -196,25 +164,27 @@ describe('`center-center`', () => {
               height: 'MOCK INNER HEIGHT'
             },
             container: {
-              x: 'MOCK X',
-              y: 'MOCK Y',
-              top: 'MOCK OFFSET TOP',
-              right: 'MOCK OFFSET LEFTMOCK CONTAINER W',
-              bottom: 'MOCK OFFSET TOPMOCK CONTAINER H',
               left: 'MOCK OFFSET LEFT',
-              width: 'MOCK CONTAINER W',
-              height: 'MOCK CONTAINER H'
+              top: 'MOCK OFFSET TOP',
+              width: 'MOCK OFFSET WIDTH',
+              height: 'MOCK OFFSET HEIGHT',
+              right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
+              bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
             },
             target: {
+              left: 'MOCK OFFSET LEFT',
+              top: 'MOCK OFFSET TOP',
               width: 'MOCK OFFSET WIDTH',
-              height: 'MOCK OFFSET HEIGHT'
+              height: 'MOCK OFFSET HEIGHT',
+              right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
+              bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
             }
           })
       )
     })
   })
 
-  describe('Main fits between the Header and Footer', () => {
+  describe('Container is shorter than the Window', () => {
     const rects = {
       viewport: {
         top: 0,
@@ -244,7 +214,7 @@ describe('`center-center`', () => {
       /**
        *  Window is 1440 x 900
        *  Header is 1440 x 90
-       *  Main is 1440 x 720
+       *  Container is 1440 x 720
        *  Footer is 1440 x 90
        *  Target is 50 x 50
        */
@@ -263,7 +233,7 @@ describe('`center-center`', () => {
       /**
        *  Window is 1440 x 900
        *  Header is 1440 x 90
-       *  Main is 1440 x 720
+       *  Container is 1440 x 720
        *  Footer is 1440 x 90
        *  Target is 50 x 50
        */
@@ -279,7 +249,7 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('Main is taller than the Window', () => {
+  describe('Container is taller than the Window', () => {
     const rects = {
       viewport: {
         top: 0,
@@ -309,7 +279,7 @@ describe('`center-center`', () => {
       /**
        *  Window is 1440 x 900
        *  Header is 1440 x 90
-       *  Main is 1440 x 990
+       *  Container is 1440 x 990
        *  Footer is 1440 x 90
        *  Target is 50 x 50
        */
@@ -328,7 +298,7 @@ describe('`center-center`', () => {
       /**
        *  Window is 1440 x 900
        *  Header is 1440 x 90
-       *  Main is 1440 x 990
+       *  Container is 1440 x 990
        *  Footer is 1440 x 90
        *  Target is 50 x 50
        */

@@ -38,25 +38,8 @@
 				})
 			}
 
-			function handleScroll () {
-				log('scroll')
-
-				const container = document.querySelector('main')
-				const target = container.querySelector('.target')
-
-				window.requestAnimationFrame(() => {
-					const coordinates = getRects(container, target)
-					const left = calculateLeft(coordinates)
-					const top = calculateTop(coordinates)
-					log(coordinates, left, top)
-
-					target.style.left = left + 'px'
-					target.style.top = top + 'px'
-				})
-			}
-
-			function handleResize () {
-				log('resize')
+			function handleChange () {
+				log('change')
 
 				const container = document.querySelector('main')
 				const target = container.querySelector('.target')
@@ -74,13 +57,13 @@
 
 			document.addEventListener('DOMContentLoaded', handleDOMContentLoaded)
 
-			window.addEventListener('scroll', handleScroll)
+			window.addEventListener('scroll', handleChange)
 
-			document.addEventListener('scroll', handleScroll)
+			document.addEventListener('scroll', handleChange)
 
-			window.addEventListener('resize', handleResize)
+			window.addEventListener('resize', handleChange)
 
-			document.addEventListener('resize', handleResize)
+			document.addEventListener('resize', handleChange)
 
 		</script>
 		<style>

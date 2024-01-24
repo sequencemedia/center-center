@@ -16,76 +16,48 @@ export function getScrollingElement (document) {
 
 export function getViewportRect () {
   const {
-    innerWidth: viewportW,
-    innerHeight: viewportH
+    innerWidth: width,
+    innerHeight: height
   } = window
 
   const {
-    scrollLeft: viewportL,
-    scrollTop: viewportT
+    scrollLeft: left,
+    scrollTop: top
   } = getScrollingElement(document)
 
-  const viewportR = (viewportL + viewportW)
-  const viewportB = (viewportT + viewportH)
-
   return {
-    top: viewportT,
-    right: viewportR,
-    bottom: viewportB,
-    left: viewportL,
-    width: viewportW,
-    height: viewportH
+    width,
+    height,
+    left,
+    top,
+    right: (left + width),
+    bottom: (top + height)
   }
 }
 
-export function getContainerRect (container) {
+export function getElementRect (element) {
   const {
-    offsetLeft: containerL,
-    offsetTop: containerT
-  } = container
-
-  /**
-   * x/top is relative to the viewport
-   */
-  const {
-    x: containerX,
-    y: containerY,
-    width: containerW,
-    height: containerH
-  } = container.getBoundingClientRect()
-
-  const containerR = (containerL + containerW)
-  const containerB = (containerT + containerH)
+    offsetWidth: width,
+    offsetHeight: height,
+    offsetLeft: left,
+    offsetTop: top
+  } = element
 
   return {
-    x: containerX,
-    y: containerY,
-    top: containerT,
-    right: containerR,
-    bottom: containerB,
-    left: containerL,
-    width: containerW,
-    height: containerH
-  }
-}
-
-export function getTargetRect (target) {
-  const {
-    offsetWidth: targetW,
-    offsetHeight: targetH
-  } = target
-
-  return {
-    width: targetW,
-    height: targetH
+    width,
+    height,
+    left,
+    top,
+    right: (left + width),
+    bottom: (top + height)
   }
 }
 
 export function getRects (container, target) {
   return {
     viewport: getViewportRect(),
-    container: getContainerRect(container),
-    target: getTargetRect(target)
+    container: getElementRect(container),
+    target: getElementRect(target)
   }
 }
 
