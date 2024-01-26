@@ -27,28 +27,33 @@
 				const container = document.querySelector('main')
 				const target = container.querySelector('.target')
 
-				window.requestAnimationFrame(() => {
-					const coordinates = getRects(container, target)
-					const left = calculateLeft(coordinates)
-					const top = calculateTop(coordinates)
-					log(coordinates, left, top)
-
-					target.style.left = left + 'px'
-					target.style.top = top + 'px'
-				})
+				render(container, target)
 			}
 
-			function handleChange () {
-				log('change')
+			function handleScroll () {
+				log('scroll')
 
 				const container = document.querySelector('main')
 				const target = container.querySelector('.target')
 
+				render(container, target)
+			}
+
+			function handleResize () {
+				log('resize')
+
+				const container = document.querySelector('main')
+				const target = container.querySelector('.target')
+
+				render(container, target)
+			}
+
+			function render (container, target) {
 				window.requestAnimationFrame(() => {
 					const coordinates = getRects(container, target)
 					const left = calculateLeft(coordinates)
 					const top = calculateTop(coordinates)
-					log(coordinates, left, top)
+					log('%d, %d', left, top)
 
 					target.style.left = left + 'px'
 					target.style.top = top + 'px'
@@ -57,14 +62,15 @@
 
 			document.addEventListener('DOMContentLoaded', handleDOMContentLoaded)
 
-			window.addEventListener('scroll', handleChange)
+			const main = document.querySelector('main')
 
-			document.addEventListener('scroll', handleChange)
+			window.addEventListener('scroll', handleScroll)
 
-			window.addEventListener('resize', handleChange)
+			document.addEventListener('scroll', handleScroll)
 
-			document.addEventListener('resize', handleChange)
+			window.addEventListener('resize', handleResize)
 
+			document.addEventListener('resize', handleResize)
 		</script>
 		<style>
 
