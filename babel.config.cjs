@@ -2,7 +2,7 @@ const debug = require('debug')
 
 const log = debug('center-center')
 
-log('`spa` is awake')
+log('`center-center` is awake')
 
 const {
   env: {
