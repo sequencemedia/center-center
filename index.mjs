@@ -12,6 +12,16 @@
  */
 
 /**
+ * Center Center `Rects`
+ *
+ * @typedef {{
+ *  viewport: CenterCenterRect,
+ *  container: CenterCenterRect,
+ *  target: CenterCenterRect
+ * }} CenterCenterRects
+ */
+
+/**
  * Gets the scroll position of the document `scrollingElement`
  *
  * @returns {{
@@ -86,11 +96,7 @@ export function getElementRect (element) {
  *
  * @param {Element} container
  * @param {Element} target
- * @returns {{
- *  viewport: CenterCenterRect,
- *  container: CenterCenterRect,
- *  target: CenterCenterRect
- * }}
+ * @returns {CenterCenterRects}
  */
 export function getRects (container, target) {
   return {
@@ -103,11 +109,7 @@ export function getRects (container, target) {
 /**
  * Calculates the target `left` position
  *
- * @param {{
- *  viewport: CenterCenterRect,
- *  container: CenterCenterRect,
- *  target: CenterCenterRect
- * }}
+ * @param {CenterCenterRects}
  * @returns {number}
  */
 export function calculateLeft ({
@@ -138,11 +140,7 @@ export function calculateLeft ({
 /**
  * Calculates the target `top` position
  *
- * @param {{
- *  viewport: CenterCenterRect,
- *  container: CenterCenterRect,
- *  target: CenterCenterRect
- * }}
+ * @param {CenterCenterRects}
  * @returns {number}
  */
 export function calculateTop ({

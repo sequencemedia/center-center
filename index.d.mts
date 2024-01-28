@@ -11,6 +11,15 @@
  *  }} CenterCenterRect
  */
 /**
+ * Center Center `Rects`
+ *
+ * @typedef {{
+ *  viewport: CenterCenterRect,
+ *  container: CenterCenterRect,
+ *  target: CenterCenterRect
+ * }} CenterCenterRects
+ */
+/**
  * Gets the scroll position of the document `scrollingElement`
  *
  * @returns {{
@@ -40,47 +49,23 @@ export function getElementRect (element: Element): CenterCenterRect
  *
  * @param {Element} container
  * @param {Element} target
- * @returns {{
- *  viewport: CenterCenterRect,
- *  container: CenterCenterRect,
- *  target: CenterCenterRect
- * }}
+ * @returns {CenterCenterRects}
  */
-export function getRects (container: Element, target: Element): {
-  viewport: CenterCenterRect
-  container: CenterCenterRect
-  target: CenterCenterRect
-}
+export function getRects (container: Element, target: Element): CenterCenterRects
 /**
  * Calculates the target `left` position
  *
- * @param {{
- *  viewport: CenterCenterRect,
- *  container: CenterCenterRect,
- *  target: CenterCenterRect
- * }}
+ * @param {CenterCenterRects}
  * @returns {number}
  */
-export function calculateLeft ({ viewport: { left: viewportL, right: viewportR }, container: { width: containerW, left: containerL, right: containerR }, target: { width: targetW } }: {
-  viewport: CenterCenterRect
-  container: CenterCenterRect
-  target: CenterCenterRect
-}): number
+export function calculateLeft ({ viewport: { left: viewportL, right: viewportR }, container: { width: containerW, left: containerL, right: containerR }, target: { width: targetW } }: CenterCenterRects): number
 /**
  * Calculates the target `top` position
  *
- * @param {{
- *  viewport: CenterCenterRect,
- *  container: CenterCenterRect,
- *  target: CenterCenterRect
- * }}
+ * @param {CenterCenterRects}
  * @returns {number}
  */
-export function calculateTop ({ viewport: { top: viewportT, bottom: viewportB }, container: { height: containerH, top: containerT, bottom: containerB }, target: { height: targetH } }: {
-  viewport: CenterCenterRect
-  container: CenterCenterRect
-  target: CenterCenterRect
-}): number
+export function calculateTop ({ viewport: { top: viewportT, bottom: viewportB }, container: { height: containerH, top: containerT, bottom: containerB }, target: { height: targetH } }: CenterCenterRects): number
 /**
  * A Center Center `Rect`
  */
@@ -91,5 +76,13 @@ export interface CenterCenterRect {
   top: number
   right: number
   bottom: number
+}
+/**
+ * Center Center `Rects`
+ */
+export interface CenterCenterRects {
+  viewport: CenterCenterRect
+  container: CenterCenterRect
+  target: CenterCenterRect
 }
 // # sourceMappingURL=index.d.mts.map
