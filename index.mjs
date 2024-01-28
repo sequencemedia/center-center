@@ -1,4 +1,25 @@
-export function getScrollingElement (document) {
+/**
+ * A Center Center `Rect`
+ *
+ * @typedef {{
+ *    width: number,
+ *    height: number,
+ *    left: number,
+ *    top: number,
+ *    right: number,
+ *    bottom: number
+ *  }} CenterCenterRect
+ */
+
+/**
+ * Gets the scroll position of the document `scrollingElement`
+ *
+ * @returns {{
+ *  scrollLeft: number,
+ *  scrollTop: number
+ * }}
+ */
+export function getScrollingElement () {
   if (Reflect.has(document, 'scrollingElement')) {
     const scrollingElement = Reflect.get(document, 'scrollingElement')
     if (scrollingElement) return scrollingElement
@@ -10,6 +31,11 @@ export function getScrollingElement (document) {
   }
 }
 
+/**
+ * Gets a `Rect` for the viewport
+ *
+ * @returns {CenterCenterRect}
+ */
 export function getViewportRect () {
   const {
     innerWidth: width,
@@ -19,7 +45,7 @@ export function getViewportRect () {
   const {
     scrollLeft: left,
     scrollTop: top
-  } = getScrollingElement(document)
+  } = getScrollingElement()
 
   return {
     width,
@@ -31,6 +57,12 @@ export function getViewportRect () {
   }
 }
 
+/**
+ * Gets a `Rect` for a DOM element
+ *
+ * @param {Element} element
+ * @returns {CenterCenterRect}
+*/
 export function getElementRect (element) {
   const {
     offsetWidth: width,
@@ -49,6 +81,17 @@ export function getElementRect (element) {
   }
 }
 
+/**
+ * Gets `Rects` for the viewport as well as the container and target elements
+ *
+ * @param {Element} container
+ * @param {Element} target
+ * @returns {{
+ *  viewport: CenterCenterRect,
+ *  container: CenterCenterRect,
+ *  target: CenterCenterRect
+ * }}
+ */
 export function getRects (container, target) {
   return {
     viewport: getViewportRect(),
@@ -57,6 +100,16 @@ export function getRects (container, target) {
   }
 }
 
+/**
+ * Calculates the target `left` position
+ *
+ * @param {{
+ *  viewport: CenterCenterRect,
+ *  container: CenterCenterRect,
+ *  target: CenterCenterRect
+ * }}
+ * @returns {number}
+ */
 export function calculateLeft ({
   viewport: {
     left: viewportL,
@@ -82,6 +135,16 @@ export function calculateLeft ({
   )
 }
 
+/**
+ * Calculates the target `top` position
+ *
+ * @param {{
+ *  viewport: CenterCenterRect,
+ *  container: CenterCenterRect,
+ *  target: CenterCenterRect
+ * }}
+ * @returns {number}
+ */
 export function calculateTop ({
   viewport: {
     top: viewportT,

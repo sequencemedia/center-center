@@ -25,11 +25,23 @@ describe('`center-center`', () => {
   it('exports `calculateTop`', () => expect(calculateTop).to.be.a('function'))
 
   describe('`getScrollingElement()`', () => {
+    beforeEach(() => {
+      global.document = {}
+    })
+
+    afterEach(() => {
+      delete global.document
+    })
+
     describe('`scrollingElement` is defined', () => {
       describe('`scrollingElement` is null', () => {
         it('returns an object', () => {
+          global.document = {
+            scrollingElement: null
+          }
+
           return (
-            expect(getScrollingElement({ scrollingElement: null }))
+            expect(getScrollingElement())
               .to.eql({
                 scrollLeft: 0,
                 scrollTop: 0
@@ -40,8 +52,15 @@ describe('`center-center`', () => {
 
       describe('`scrollingElement` is an object', () => {
         it('returns an object', () => {
+          global.document = {
+            scrollingElement: {
+              scrollLeft: 'MOCK SCROLL LEFT',
+              scrollTop: 'MOCK SCROLL TOP'
+            }
+          }
+
           return (
-            expect(getScrollingElement({ scrollingElement: { scrollLeft: 'MOCK SCROLL LEFT', scrollTop: 'MOCK SCROLL TOP' } }))
+            expect(getScrollingElement())
               .to.eql({
                 scrollLeft: 'MOCK SCROLL LEFT',
                 scrollTop: 'MOCK SCROLL TOP'
@@ -54,7 +73,7 @@ describe('`center-center`', () => {
     describe('`scrollingElement` is not defined', () => {
       it('returns an object', () => {
         return (
-          expect(getScrollingElement({}))
+          expect(getScrollingElement())
             .to.eql({
               scrollLeft: 0,
               scrollTop: 0
