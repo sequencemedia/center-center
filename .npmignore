@@ -21,8 +21,5 @@ babel.config.cjs
 # Deps
 .depsrc
 
-# Docs
-docs
-
 # Test
 test
