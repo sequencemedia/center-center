@@ -9,6 +9,11 @@
     "email": "sequencemedia@sequencemedia.net",
     "url": "http://sequencemedia.net"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sequencemedia/center-center.git"
+  },
   "scripts": {
     "lint": "cross-env NODE_ENV=production eslint . --ext .mjs,.cjs",
     "lint:fix": "npm run lint -- --fix",
