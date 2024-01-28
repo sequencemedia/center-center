@@ -21,8 +21,10 @@
 
 			const log = debug('center-center')
 
-			function handleDOMContentLoaded () {
-				log('DOMContentLoaded')
+			const resizeObserver = new ResizeObserver(handleResize)
+
+			function handleOrientationChange () {
+				log('orientationchange')
 
 				const container = document.querySelector('main')
 				const target = container.querySelector('.target')
@@ -48,32 +50,49 @@
 				render(container, target)
 			}
 
+			function handleDOMContentLoaded () {
+				log('DOMContentLoaded')
+
+				const container = document.querySelector('main')
+
+				resizeObserver.observe(container)
+
+				window.addEventListener('orientationchange', handleOrientationChange)
+
+				window.addEventListener('scroll', handleScroll)
+
+				document.addEventListener('scroll', handleScroll)
+
+				window.addEventListener('resize', handleResize)
+
+				document.addEventListener('resize', handleResize)
+			}
+
 			function render (container, target) {
+				log('render')
+
 				window.requestAnimationFrame(() => {
-					const coordinates = getRects(container, target)
-					const left = calculateLeft(coordinates)
-					const top = calculateTop(coordinates)
+					const rects = getRects(container, target)
+					const left = calculateLeft(rects)
+					const top = calculateTop(rects)
+
 					log('%d, %d', left, top)
 
-					target.style.left = left + 'px'
-					target.style.top = top + 'px'
+					const {
+					target: {
+						left: currentLeft,
+						top: currentTop
+					}
+					} = rects
+
+					if (currentLeft !== left) target.style.left = left + 'px'
+					if (currentTop !== top) target.style.top = top + 'px'
 				})
 			}
 
 			document.addEventListener('DOMContentLoaded', handleDOMContentLoaded)
-
-			const main = document.querySelector('main')
-
-			window.addEventListener('scroll', handleScroll)
-
-			document.addEventListener('scroll', handleScroll)
-
-			window.addEventListener('resize', handleResize)
-
-			document.addEventListener('resize', handleResize)
 		</script>
 		<style>
-
 			*,
 			*::before,
 			*::after {
@@ -155,7 +174,6 @@
 				overflow: hidden;
 				z-index: 1;
 			}
-
 		</style>
 	</head><body>
 		<div class="container">
