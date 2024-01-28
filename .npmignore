@@ -23,3 +23,6 @@ babel.config.cjs
 
 # Docs
 docs
+
+# Test
+test
