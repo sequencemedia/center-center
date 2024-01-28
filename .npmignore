@@ -23,3 +23,7 @@ babel.config.cjs
 
 # Test
 test
+
+# Typescript
+tsconfig.json
+jsconfig.json
