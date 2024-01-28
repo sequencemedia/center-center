@@ -4,6 +4,7 @@
   "description": "Position an element at the center center of a container",
   "main": "./index.mjs",
   "type": "module",
+  "types": "./index.d.mts",
   "author": {
     "name": "Jonathan Perry for Sequence Media Limited",
     "email": "sequencemedia@sequencemedia.net",
