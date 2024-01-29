@@ -1,9 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-rm *.mts *.mts.map 2> /dev/null
-npm run types
-npm run lint:mts:fix
-git add *.mts *.mts.map
-npm run lint:mjs
+npm run lint
 npm test

@@ -1,33 +1,13 @@
 /**
- * A Center Center `Rect`
- *
- * @typedef {{
- *    width: number,
- *    height: number,
- *    left: number,
- *    top: number,
- *    right: number,
- *    bottom: number
- *  }} CenterCenterRect
+ * @typedef {import('.').ScrollingElement} ScrollingElement
+ * @typedef {import('.').CenterCenterRect} CenterCenterRect
+ * @typedef {import('.').CenterCenterRects} CenterCenterRects
  */
 
 /**
- * Center Center `Rects`
+ * Gets the document `scrollingElement` (or a valid alternative)
  *
- * @typedef {{
- *  viewport: CenterCenterRect,
- *  container: CenterCenterRect,
- *  target: CenterCenterRect
- * }} CenterCenterRects
- */
-
-/**
- * Gets the scroll position of the document `scrollingElement`
- *
- * @returns {{
- *  scrollLeft: number,
- *  scrollTop: number
- * }}
+ * @returns {ScrollingElement}
  */
 export function getScrollingElement () {
   if (Reflect.has(document, 'scrollingElement')) {
