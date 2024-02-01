@@ -4,6 +4,51 @@
  * @typedef {import('.').CenterCenterRects} CenterCenterRects
  */
 
+const elementMap = new WeakMap()
+
+export function getOffsetParentElement (element) {
+  let parentElement = element.parentElement
+  while (!Reflect.has(parentElement, 'offsetLeft') && !Reflect.has(parentElement, 'offsetTop')) {
+    parentElement = element.parentElement
+  }
+
+  return parentElement
+}
+
+export function getOffsetLeft (element) {
+  if (Reflect.has(element, 'offsetLeft')) {
+    return Reflect.get(element, 'offsetLeft')
+  }
+
+  const {
+    left
+  } = element.getBoundingClientRect()
+
+  if (!elementMap.has(element)) elementMap.set(element, getOffsetParentElement(element))
+  const {
+    offsetLeft = 0
+  } = elementMap.get(element)
+
+  return offsetLeft + (offsetLeft - left)
+}
+
+export function getOffsetTop (element) {
+  if (Reflect.has(element, 'offsetTop')) {
+    return Reflect.get(element, 'offsetTop')
+  }
+
+  const {
+    top
+  } = element.getBoundingClientRect()
+
+  if (!elementMap.has(element)) elementMap.set(element, getOffsetParentElement(element))
+  const {
+    offsetTop = 0
+  } = elementMap.get(element)
+
+  return offsetTop + (offsetTop - top)
+}
+
 /**
  * Gets the document `scrollingElement` (or a valid alternative)
  *
