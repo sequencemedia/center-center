@@ -55,11 +55,11 @@ export function getViewportRect () {
 */
 export function getElementRect (element) {
   const {
-    width,
-    height,
-    left,
-    top
-  } = element.getBoundingClientRect()
+    offsetWidth: width,
+    offsetHeight: height,
+    offsetLeft: left,
+    offsetTop: top
+  } = element
 
   return {
     width,
