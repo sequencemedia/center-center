@@ -115,22 +115,26 @@ describe('`center-center`', () => {
 
   describe('`getElementRect()`', () => {
     const mockElement = {
-      offsetLeft: 'MOCK OFFSET LEFT',
-      offsetTop: 'MOCK OFFSET TOP',
-      offsetWidth: 'MOCK OFFSET WIDTH',
-      offsetHeight: 'MOCK OFFSET HEIGHT'
+      getBoundingClientRect () {
+        return {
+          left: 'MOCK LEFT',
+          top: 'MOCK TOP',
+          width: 'MOCK WIDTH',
+          height: 'MOCK HEIGHT'
+        }
+      }
     }
 
     it('returns an object', () => {
       return (
         expect(getElementRect(mockElement))
           .to.eql({
-            left: 'MOCK OFFSET LEFT',
-            top: 'MOCK OFFSET TOP',
-            width: 'MOCK OFFSET WIDTH',
-            height: 'MOCK OFFSET HEIGHT',
-            right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
-            bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
+            left: 'MOCK LEFT',
+            top: 'MOCK TOP',
+            width: 'MOCK WIDTH',
+            height: 'MOCK HEIGHT',
+            right: 'MOCK LEFTMOCK WIDTH',
+            bottom: 'MOCK TOPMOCK HEIGHT'
           })
       )
     })
@@ -138,17 +142,25 @@ describe('`center-center`', () => {
 
   describe('`getRects()`', () => {
     const mockContainer = {
-      offsetLeft: 'MOCK OFFSET LEFT',
-      offsetTop: 'MOCK OFFSET TOP',
-      offsetWidth: 'MOCK OFFSET WIDTH',
-      offsetHeight: 'MOCK OFFSET HEIGHT'
+      getBoundingClientRect () {
+        return {
+          left: 'MOCK LEFT',
+          top: 'MOCK TOP',
+          width: 'MOCK WIDTH',
+          height: 'MOCK HEIGHT'
+        }
+      }
     }
 
     const mockTarget = {
-      offsetLeft: 'MOCK OFFSET LEFT',
-      offsetTop: 'MOCK OFFSET TOP',
-      offsetWidth: 'MOCK OFFSET WIDTH',
-      offsetHeight: 'MOCK OFFSET HEIGHT'
+      getBoundingClientRect () {
+        return {
+          left: 'MOCK LEFT',
+          top: 'MOCK TOP',
+          width: 'MOCK WIDTH',
+          height: 'MOCK HEIGHT'
+        }
+      }
     }
 
     beforeEach(() => {
@@ -183,20 +195,20 @@ describe('`center-center`', () => {
               height: 'MOCK INNER HEIGHT'
             },
             container: {
-              left: 'MOCK OFFSET LEFT',
-              top: 'MOCK OFFSET TOP',
-              width: 'MOCK OFFSET WIDTH',
-              height: 'MOCK OFFSET HEIGHT',
-              right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
-              bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
+              left: 'MOCK LEFT',
+              top: 'MOCK TOP',
+              width: 'MOCK WIDTH',
+              height: 'MOCK HEIGHT',
+              right: 'MOCK LEFTMOCK WIDTH',
+              bottom: 'MOCK TOPMOCK HEIGHT'
             },
             target: {
-              left: 'MOCK OFFSET LEFT',
-              top: 'MOCK OFFSET TOP',
-              width: 'MOCK OFFSET WIDTH',
-              height: 'MOCK OFFSET HEIGHT',
-              right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
-              bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
+              left: 'MOCK LEFT',
+              top: 'MOCK TOP',
+              width: 'MOCK WIDTH',
+              height: 'MOCK HEIGHT',
+              right: 'MOCK LEFTMOCK WIDTH',
+              bottom: 'MOCK TOPMOCK HEIGHT'
             }
           })
       )
