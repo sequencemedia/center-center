@@ -6,7 +6,7 @@
 			{
 				"imports": {
 					"debug": "https://esm.sh/debug",
-					"center-center": "https://esm.sh/center-center"
+					"center-center": "/assets/index.mjs"
 				}
 			}
 		</script>
@@ -79,10 +79,10 @@
 					log('%d, %d', left, top)
 
 					const {
-					target: {
-						left: currentLeft,
-						top: currentTop
-					}
+						target: {
+							left: currentLeft,
+							top: currentTop
+						}
 					} = rects
 
 					if (currentLeft !== left) target.style.left = left + 'px'
