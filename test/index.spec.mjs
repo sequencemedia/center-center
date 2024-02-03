@@ -3,6 +3,10 @@ import {
 } from 'chai'
 
 import {
+  getParentElementForOffsetLeft,
+  getParentElementForOffsetTop,
+  getLeft,
+  getTop,
   getScrollingElement,
   getViewportRect,
   getElementRect,
@@ -12,6 +16,14 @@ import {
 } from '#center-center'
 
 describe('`center-center`', () => {
+  it('exports `getParentElementForOffsetLeft`', () => expect(getParentElementForOffsetLeft).to.be.a('function'))
+
+  it('exports `getParentElementForOffsetTop`', () => expect(getParentElementForOffsetTop).to.be.a('function'))
+
+  it('exports `getLeft`', () => expect(getLeft).to.be.a('function'))
+
+  it('exports `getTop`', () => expect(getTop).to.be.a('function'))
+
   it('exports `getScrollingElement`', () => expect(getScrollingElement).to.be.a('function'))
 
   it('exports `getViewportRect`', () => expect(getViewportRect).to.be.a('function'))
@@ -23,6 +35,108 @@ describe('`center-center`', () => {
   it('exports `calculateLeft`', () => expect(calculateLeft).to.be.a('function'))
 
   it('exports `calculateTop`', () => expect(calculateTop).to.be.a('function'))
+
+  describe('`getParentElementForOffsetLeft()`', () => {
+    const mockParentElement = {
+      offsetLeft: 'MOCK OFFSET LEFT'
+    }
+    const mockElement = {
+      parentElement: mockParentElement
+    }
+
+    it('returns an element', () => {
+      return (
+        expect(getParentElementForOffsetLeft(mockElement))
+          .to.equal(mockParentElement)
+      )
+    })
+  })
+
+  describe('`getParentElementForOffsetTop()`', () => {
+    const mockParentElement = {
+      offsetTop: 'MOCK OFFSET TOP'
+    }
+    const mockElement = {
+      parentElement: mockParentElement
+    }
+
+    it('returns an element', () => {
+      return (
+        expect(getParentElementForOffsetTop(mockElement))
+          .to.equal(mockParentElement)
+      )
+    })
+  })
+
+  describe('`getLeft()`', () => {
+    describe('Element has `offsetLeft`', () => {
+      const mockElement = {
+        offsetLeft: 4
+      }
+
+      it('returns a number', () => {
+        return (
+          expect(getLeft(mockElement))
+            .to.equal(4)
+        )
+      })
+    })
+
+    describe('Element does not have `offsetLeft`', () => {
+      const mockElement = {
+        parentElement: {
+          offsetLeft: 6
+        },
+        getBoundingClientRect () {
+          return {
+            left: 2
+          }
+        }
+      }
+
+      it('returns a number', () => {
+        return (
+          expect(getLeft(mockElement))
+            .to.equal(4)
+        )
+      })
+    })
+  })
+
+  describe('`getTop()`', () => {
+    describe('Element has `offsetTop`', () => {
+      const mockElement = {
+        offsetTop: 4
+      }
+
+      it('returns a number', () => {
+        return (
+          expect(getTop(mockElement))
+            .to.equal(4)
+        )
+      })
+    })
+
+    describe('Element does not have `offsetTop`', () => {
+      const mockElement = {
+        parentElement: {
+          offsetTop: 6
+        },
+        getBoundingClientRect () {
+          return {
+            top: 2
+          }
+        }
+      }
+
+      it('returns a number', () => {
+        return (
+          expect(getTop(mockElement))
+            .to.equal(4)
+        )
+      })
+    })
+  })
 
   describe('`getScrollingElement()`', () => {
     beforeEach(() => {
@@ -114,7 +228,7 @@ describe('`center-center`', () => {
   })
 
   describe('`getElementRect()`', () => {
-    describe('Element has `offsetLeft` and `offsetTop', () => {
+    describe('Element has `offsetLeft`', () => {
       const mockElement = {
         offsetLeft: 'MOCK OFFSET LEFT',
         offsetTop: 'MOCK OFFSET TOP',
@@ -149,7 +263,42 @@ describe('`center-center`', () => {
       })
     })
 
-    describe('Element does not have `offsetLeft` and `offsetTop', () => {
+    describe('Element has `offsetTop`', () => {
+      const mockElement = {
+        offsetLeft: 'MOCK OFFSET LEFT',
+        offsetTop: 'MOCK OFFSET TOP',
+        offsetWidth: 'MOCK OFFSET WIDTH',
+        offsetHeight: 'MOCK OFFSET HEIGHT',
+        parentElement: {
+          offsetLeft: 'MOCK PARENT ELEMENT OFFSET LEFT',
+          offsetTop: 'MOCK PARENT ELEMENT OFFSET TOP'
+        },
+        getBoundingClientRect () {
+          return {
+            width: 'MOCK WIDTH',
+            height: 'MOCK HEIGHT',
+            left: 2,
+            top: 2
+          }
+        }
+      }
+
+      it('returns an object', () => {
+        return (
+          expect(getElementRect(mockElement))
+            .to.eql({
+              left: 'MOCK OFFSET LEFT',
+              top: 'MOCK OFFSET TOP',
+              width: 'MOCK WIDTH',
+              height: 'MOCK HEIGHT',
+              right: 'MOCK OFFSET LEFTMOCK WIDTH',
+              bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
+            })
+        )
+      })
+    })
+
+    describe('Element does not have `offsetLeft` nor `offsetTop`', () => {
       const mockElement = {
         parentElement: {
           offsetLeft: 2,
@@ -182,83 +331,255 @@ describe('`center-center`', () => {
   })
 
   describe('`getRects()`', () => {
-    const mockContainer = {
-      offsetLeft: 'MOCK OFFSET LEFT',
-      offsetTop: 'MOCK OFFSET TOP',
-      offsetWidth: 'MOCK OFFSET WIDTH',
-      offsetHeight: 'MOCK OFFSET HEIGHT',
-      getBoundingClientRect () {
-        return {
-          width: 'MOCK WIDTH',
-          height: 'MOCK HEIGHT'
+    describe('Element has an `offsetLeft`', () => {
+      const mockContainer = {
+        offsetLeft: 'MOCK OFFSET LEFT',
+        offsetTop: 'MOCK OFFSET TOP',
+        offsetWidth: 'MOCK OFFSET WIDTH',
+        offsetHeight: 'MOCK OFFSET HEIGHT',
+        getBoundingClientRect () {
+          return {
+            width: 'MOCK WIDTH',
+            height: 'MOCK HEIGHT'
+          }
         }
       }
-    }
 
-    const mockTarget = {
-      parentElement: {
-        offsetLeft: 2,
-        offsetTop: 4
-      },
-      getBoundingClientRect () {
-        return {
-          width: 4,
-          height: 2,
-          left: -2,
-          top: -2
+      const mockTarget = {
+        offsetLeft: 1,
+        offsetTop: 2,
+        offsetWidth: 3,
+        offsetHeight: 4,
+        parentElement: {
+          offsetLeft: 5,
+          offsetTop: 6
+        },
+        getBoundingClientRect () {
+          return {
+            width: 10,
+            height: 9,
+            left: -8,
+            top: -7
+          }
         }
       }
-    }
 
-    beforeEach(() => {
-      global.window = {
-        innerWidth: 'MOCK INNER WIDTH',
-        innerHeight: 'MOCK INNER HEIGHT'
-      }
-
-      global.document = {
-        scrollingElement: {
-          scrollLeft: 'MOCK SCROLL LEFT',
-          scrollTop: 'MOCK SCROLL TOP'
+      beforeEach(() => {
+        global.window = {
+          innerWidth: 'MOCK INNER WIDTH',
+          innerHeight: 'MOCK INNER HEIGHT'
         }
-      }
+
+        global.document = {
+          scrollingElement: {
+            scrollLeft: 'MOCK SCROLL LEFT',
+            scrollTop: 'MOCK SCROLL TOP'
+          }
+        }
+      })
+
+      afterEach(() => {
+        delete global.window
+        delete global.document
+      })
+
+      it('returns an object', () => {
+        return (
+          expect(getRects(mockContainer, mockTarget))
+            .to.eql({
+              viewport: {
+                top: 'MOCK SCROLL TOP',
+                right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
+                bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
+                left: 'MOCK SCROLL LEFT',
+                width: 'MOCK INNER WIDTH',
+                height: 'MOCK INNER HEIGHT'
+              },
+              container: {
+                left: 'MOCK OFFSET LEFT',
+                top: 'MOCK OFFSET TOP',
+                width: 'MOCK WIDTH',
+                height: 'MOCK HEIGHT',
+                right: 'MOCK OFFSET LEFTMOCK WIDTH',
+                bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
+              },
+              target: {
+                left: 1,
+                top: 2,
+                width: 10,
+                height: 9,
+                right: 11,
+                bottom: 11
+              }
+            })
+        )
+      })
     })
 
-    afterEach(() => {
-      delete global.window
-      delete global.document
+    describe('Element has an `offsetTop`', () => {
+      const mockContainer = {
+        offsetLeft: 'MOCK OFFSET LEFT',
+        offsetTop: 'MOCK OFFSET TOP',
+        offsetWidth: 'MOCK OFFSET WIDTH',
+        offsetHeight: 'MOCK OFFSET HEIGHT',
+        getBoundingClientRect () {
+          return {
+            width: 'MOCK WIDTH',
+            height: 'MOCK HEIGHT'
+          }
+        }
+      }
+
+      const mockTarget = {
+        offsetLeft: 1,
+        offsetTop: 2,
+        offsetWidth: 3,
+        offsetHeight: 4,
+        parentElement: {
+          offsetLeft: 5,
+          offsetTop: 6
+        },
+        getBoundingClientRect () {
+          return {
+            width: 10,
+            height: 9,
+            left: -8,
+            top: -7
+          }
+        }
+      }
+
+      beforeEach(() => {
+        global.window = {
+          innerWidth: 'MOCK INNER WIDTH',
+          innerHeight: 'MOCK INNER HEIGHT'
+        }
+
+        global.document = {
+          scrollingElement: {
+            scrollLeft: 'MOCK SCROLL LEFT',
+            scrollTop: 'MOCK SCROLL TOP'
+          }
+        }
+      })
+
+      afterEach(() => {
+        delete global.window
+        delete global.document
+      })
+
+      it('returns an object', () => {
+        return (
+          expect(getRects(mockContainer, mockTarget))
+            .to.eql({
+              viewport: {
+                top: 'MOCK SCROLL TOP',
+                right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
+                bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
+                left: 'MOCK SCROLL LEFT',
+                width: 'MOCK INNER WIDTH',
+                height: 'MOCK INNER HEIGHT'
+              },
+              container: {
+                left: 'MOCK OFFSET LEFT',
+                top: 'MOCK OFFSET TOP',
+                width: 'MOCK WIDTH',
+                height: 'MOCK HEIGHT',
+                right: 'MOCK OFFSET LEFTMOCK WIDTH',
+                bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
+              },
+              target: {
+                left: 1,
+                top: 2,
+                width: 10,
+                height: 9,
+                right: 11,
+                bottom: 11
+              }
+            })
+        )
+      })
     })
 
-    it('returns an object', () => {
-      return (
-        expect(getRects(mockContainer, mockTarget))
-          .to.eql({
-            viewport: {
-              top: 'MOCK SCROLL TOP',
-              right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
-              bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
-              left: 'MOCK SCROLL LEFT',
-              width: 'MOCK INNER WIDTH',
-              height: 'MOCK INNER HEIGHT'
-            },
-            container: {
-              left: 'MOCK OFFSET LEFT',
-              top: 'MOCK OFFSET TOP',
-              width: 'MOCK WIDTH',
-              height: 'MOCK HEIGHT',
-              right: 'MOCK OFFSET LEFTMOCK WIDTH',
-              bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
-            },
-            target: {
-              left: 4,
-              top: 6,
-              width: 4,
-              height: 2,
-              right: 8,
-              bottom: 8
-            }
-          })
-      )
+    describe('Element does not have `offsetLeft` nor `offsetTop`', () => {
+      const mockContainer = {
+        offsetLeft: 'MOCK OFFSET LEFT',
+        offsetTop: 'MOCK OFFSET TOP',
+        offsetWidth: 'MOCK OFFSET WIDTH',
+        offsetHeight: 'MOCK OFFSET HEIGHT',
+        getBoundingClientRect () {
+          return {
+            width: 'MOCK WIDTH',
+            height: 'MOCK HEIGHT'
+          }
+        }
+      }
+
+      const mockTarget = {
+        parentElement: {
+          offsetLeft: 2,
+          offsetTop: 4
+        },
+        getBoundingClientRect () {
+          return {
+            width: 4,
+            height: 2,
+            left: -2,
+            top: -2
+          }
+        }
+      }
+
+      beforeEach(() => {
+        global.window = {
+          innerWidth: 'MOCK INNER WIDTH',
+          innerHeight: 'MOCK INNER HEIGHT'
+        }
+
+        global.document = {
+          scrollingElement: {
+            scrollLeft: 'MOCK SCROLL LEFT',
+            scrollTop: 'MOCK SCROLL TOP'
+          }
+        }
+      })
+
+      afterEach(() => {
+        delete global.window
+        delete global.document
+      })
+
+      it('returns an object', () => {
+        return (
+          expect(getRects(mockContainer, mockTarget))
+            .to.eql({
+              viewport: {
+                top: 'MOCK SCROLL TOP',
+                right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
+                bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
+                left: 'MOCK SCROLL LEFT',
+                width: 'MOCK INNER WIDTH',
+                height: 'MOCK INNER HEIGHT'
+              },
+              container: {
+                left: 'MOCK OFFSET LEFT',
+                top: 'MOCK OFFSET TOP',
+                width: 'MOCK WIDTH',
+                height: 'MOCK HEIGHT',
+                right: 'MOCK OFFSET LEFTMOCK WIDTH',
+                bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
+              },
+              target: {
+                left: 4,
+                top: 6,
+                width: 4,
+                height: 2,
+                right: 8,
+                bottom: 8
+              }
+            })
+        )
+      })
     })
   })
 
@@ -296,7 +617,7 @@ describe('`center-center`', () => {
        *  Footer is 1440 x 90
        *  Target is 50 x 50
        */
-      it('returns an object', () => {
+      it('returns a number', () => {
         /**
          *  (1440 / 2) - (50 / 2)
          */
@@ -315,7 +636,7 @@ describe('`center-center`', () => {
        *  Footer is 1440 x 90
        *  Target is 50 x 50
        */
-      it('returns an object', () => {
+      it('returns a number', () => {
         /**
          *  (720 / 2) - (50 / 2)
          */
@@ -361,7 +682,7 @@ describe('`center-center`', () => {
        *  Footer is 1440 x 90
        *  Target is 50 x 50
        */
-      it('returns an object', () => {
+      it('returns a number', () => {
         /**
          *  (1440 / 2) - (50 / 2)
          */
@@ -380,7 +701,7 @@ describe('`center-center`', () => {
        *  Footer is 1440 x 90
        *  Target is 50 x 50
        */
-      it('returns an object', () => {
+      it('returns a number', () => {
         /**
          *  (810 / 2) - (50 / 2)
          */

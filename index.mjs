@@ -4,18 +4,19 @@
  * @typedef {import('.').CenterCenterRects} CenterCenterRects
  */
 
-const elementMap = new WeakMap()
+const leftMap = new WeakMap()
+const topMap = new WeakMap()
 
 /**
- * Gets a parent element with `offsetLeft` and `offsetTop`
+ * Gets a parent element with `offsetLeft`
  *
  * @param {SVGElement} element
  * @returns {Element}
  */
-export function getOffsetParentElement (element) {
+export function getParentElementForOffsetLeft (element) {
   let parentElement = element.parentElement
 
-  while (!Reflect.has(parentElement, 'offsetLeft') && !Reflect.has(parentElement, 'offsetTop')) {
+  while (!Reflect.has(parentElement, 'offsetLeft')) {
     parentElement = parentElement.parentElement
   }
 
@@ -23,27 +24,43 @@ export function getOffsetParentElement (element) {
 }
 
 /**
- * Gets the `offsetLeft` from the element or calculates it with
+ * Gets a parent element with `offsetTop`
+ *
+ * @param {SVGElement} element
+ * @returns {Element}
+ */
+export function getParentElementForOffsetTop (element) {
+  let parentElement = element.parentElement
+
+  while (!Reflect.has(parentElement, 'offsetTop')) {
+    parentElement = parentElement.parentElement
+  }
+
+  return parentElement
+}
+
+/**
+ * Gets the `offsetLeft` from the element or calculates the equivalent with
  * DOMRect `left` and the nearest `offsetLeft` from a parent
  *
  * @param {Element | SVGElement} element
  * @returns {number}
  */
-export function getOffsetLeft (element) {
+export function getLeft (element) {
   if (Reflect.has(element, 'offsetLeft')) {
     return (
       Reflect.get(element, 'offsetLeft')
     )
   }
 
+  if (!leftMap.has(element)) leftMap.set(element, getParentElementForOffsetLeft(element))
+  const {
+    offsetLeft = 0
+  } = leftMap.get(element)
+
   const {
     left
   } = element.getBoundingClientRect()
-
-  if (!elementMap.has(element)) elementMap.set(element, getOffsetParentElement(element))
-  const {
-    offsetLeft = 0
-  } = elementMap.get(element)
 
   return (
     offsetLeft - left
@@ -51,13 +68,13 @@ export function getOffsetLeft (element) {
 }
 
 /**
- * Gets the `offsetTop` from the element or calculates it with
+ * Gets the `offsetTop` from the element or calculates the equivalent with
  * DOMRect `top` and the nearest `offsetTop` from a parent
  *
  * @param {Element | SVGElement} element
  * @returns {number}
  */
-export function getOffsetTop (element) {
+export function getTop (element) {
   if (Reflect.has(element, 'offsetTop')) {
     return (
       Reflect.get(element, 'offsetTop')
@@ -68,10 +85,10 @@ export function getOffsetTop (element) {
     top
   } = element.getBoundingClientRect()
 
-  if (!elementMap.has(element)) elementMap.set(element, getOffsetParentElement(element))
+  if (!topMap.has(element)) topMap.set(element, getParentElementForOffsetTop(element))
   const {
     offsetTop = 0
-  } = elementMap.get(element)
+  } = topMap.get(element)
 
   return (
     offsetTop - top
@@ -133,16 +150,16 @@ export function getElementRect (element) {
     height
   } = element.getBoundingClientRect()
 
-  const offsetLeft = getOffsetLeft(element)
-  const offsetTop = getOffsetTop(element)
+  const left = getLeft(element)
+  const top = getTop(element)
 
   return {
     width,
     height,
-    left: offsetLeft,
-    top: offsetTop,
-    right: (offsetLeft + width),
-    bottom: (offsetTop + height)
+    left,
+    top,
+    right: (left + width),
+    bottom: (top + height)
   }
 }
 
