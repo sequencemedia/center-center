@@ -114,25 +114,70 @@ describe('`center-center`', () => {
   })
 
   describe('`getElementRect()`', () => {
-    const mockElement = {
-      offsetLeft: 'MOCK OFFSET LEFT',
-      offsetTop: 'MOCK OFFSET TOP',
-      offsetWidth: 'MOCK OFFSET WIDTH',
-      offsetHeight: 'MOCK OFFSET HEIGHT'
-    }
+    describe('Element has `offsetLeft` and `offsetTop', () => {
+      const mockElement = {
+        offsetLeft: 'MOCK OFFSET LEFT',
+        offsetTop: 'MOCK OFFSET TOP',
+        offsetWidth: 'MOCK OFFSET WIDTH',
+        offsetHeight: 'MOCK OFFSET HEIGHT',
+        parentElement: {
+          offsetLeft: 'MOCK PARENT ELEMENT OFFSET LEFT',
+          offsetTop: 'MOCK PARENT ELEMENT OFFSET TOP'
+        },
+        getBoundingClientRect () {
+          return {
+            width: 'MOCK WIDTH',
+            height: 'MOCK HEIGHT',
+            left: 2,
+            top: 2
+          }
+        }
+      }
 
-    it('returns an object', () => {
-      return (
-        expect(getElementRect(mockElement))
-          .to.eql({
-            left: 'MOCK OFFSET LEFT',
-            top: 'MOCK OFFSET TOP',
-            width: 'MOCK OFFSET WIDTH',
-            height: 'MOCK OFFSET HEIGHT',
-            right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
-            bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
-          })
-      )
+      it('returns an object', () => {
+        return (
+          expect(getElementRect(mockElement))
+            .to.eql({
+              left: 'MOCK OFFSET LEFT',
+              top: 'MOCK OFFSET TOP',
+              width: 'MOCK WIDTH',
+              height: 'MOCK HEIGHT',
+              right: 'MOCK OFFSET LEFTMOCK WIDTH',
+              bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
+            })
+        )
+      })
+    })
+
+    describe('Element does not have `offsetLeft` and `offsetTop', () => {
+      const mockElement = {
+        parentElement: {
+          offsetLeft: 2,
+          offsetTop: 4
+        },
+        getBoundingClientRect () {
+          return {
+            width: 4,
+            height: 2,
+            left: -2,
+            top: -2
+          }
+        }
+      }
+
+      it('returns an object', () => {
+        return (
+          expect(getElementRect(mockElement))
+            .to.eql({
+              left: 4,
+              top: 6,
+              width: 4,
+              height: 2,
+              right: 8,
+              bottom: 8
+            })
+        )
+      })
     })
   })
 
@@ -141,14 +186,28 @@ describe('`center-center`', () => {
       offsetLeft: 'MOCK OFFSET LEFT',
       offsetTop: 'MOCK OFFSET TOP',
       offsetWidth: 'MOCK OFFSET WIDTH',
-      offsetHeight: 'MOCK OFFSET HEIGHT'
+      offsetHeight: 'MOCK OFFSET HEIGHT',
+      getBoundingClientRect () {
+        return {
+          width: 'MOCK WIDTH',
+          height: 'MOCK HEIGHT'
+        }
+      }
     }
 
     const mockTarget = {
-      offsetLeft: 'MOCK OFFSET LEFT',
-      offsetTop: 'MOCK OFFSET TOP',
-      offsetWidth: 'MOCK OFFSET WIDTH',
-      offsetHeight: 'MOCK OFFSET HEIGHT'
+      parentElement: {
+        offsetLeft: 2,
+        offsetTop: 4
+      },
+      getBoundingClientRect () {
+        return {
+          width: 4,
+          height: 2,
+          left: -2,
+          top: -2
+        }
+      }
     }
 
     beforeEach(() => {
@@ -185,18 +244,18 @@ describe('`center-center`', () => {
             container: {
               left: 'MOCK OFFSET LEFT',
               top: 'MOCK OFFSET TOP',
-              width: 'MOCK OFFSET WIDTH',
-              height: 'MOCK OFFSET HEIGHT',
-              right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
-              bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
+              width: 'MOCK WIDTH',
+              height: 'MOCK HEIGHT',
+              right: 'MOCK OFFSET LEFTMOCK WIDTH',
+              bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
             },
             target: {
-              left: 'MOCK OFFSET LEFT',
-              top: 'MOCK OFFSET TOP',
-              width: 'MOCK OFFSET WIDTH',
-              height: 'MOCK OFFSET HEIGHT',
-              right: 'MOCK OFFSET LEFTMOCK OFFSET WIDTH',
-              bottom: 'MOCK OFFSET TOPMOCK OFFSET HEIGHT'
+              left: 4,
+              top: 6,
+              width: 4,
+              height: 2,
+              right: 8,
+              bottom: 8
             }
           })
       )

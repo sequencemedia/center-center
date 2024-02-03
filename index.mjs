@@ -6,18 +6,34 @@
 
 const elementMap = new WeakMap()
 
+/**
+ * Gets a parent element with `offsetLeft` and `offsetTop`
+ *
+ * @param {SVGElement} element
+ * @returns {Element}
+ */
 export function getOffsetParentElement (element) {
   let parentElement = element.parentElement
+
   while (!Reflect.has(parentElement, 'offsetLeft') && !Reflect.has(parentElement, 'offsetTop')) {
-    parentElement = element.parentElement
+    parentElement = parentElement.parentElement
   }
 
   return parentElement
 }
 
+/**
+ * Gets the `offsetLeft` from the element or calculates it with
+ * DOMRect `left` and the nearest `offsetLeft` from a parent
+ *
+ * @param {Element | SVGElement} element
+ * @returns {number}
+ */
 export function getOffsetLeft (element) {
   if (Reflect.has(element, 'offsetLeft')) {
-    return Reflect.get(element, 'offsetLeft')
+    return (
+      Reflect.get(element, 'offsetLeft')
+    )
   }
 
   const {
@@ -29,12 +45,23 @@ export function getOffsetLeft (element) {
     offsetLeft = 0
   } = elementMap.get(element)
 
-  return offsetLeft + (offsetLeft - left)
+  return (
+    offsetLeft - left
+  )
 }
 
+/**
+ * Gets the `offsetTop` from the element or calculates it with
+ * DOMRect `top` and the nearest `offsetTop` from a parent
+ *
+ * @param {Element | SVGElement} element
+ * @returns {number}
+ */
 export function getOffsetTop (element) {
   if (Reflect.has(element, 'offsetTop')) {
-    return Reflect.get(element, 'offsetTop')
+    return (
+      Reflect.get(element, 'offsetTop')
+    )
   }
 
   const {
@@ -46,7 +73,9 @@ export function getOffsetTop (element) {
     offsetTop = 0
   } = elementMap.get(element)
 
-  return offsetTop + (offsetTop - top)
+  return (
+    offsetTop - top
+  )
 }
 
 /**
@@ -100,19 +129,20 @@ export function getViewportRect () {
 */
 export function getElementRect (element) {
   const {
-    offsetWidth: width,
-    offsetHeight: height,
-    offsetLeft: left,
-    offsetTop: top
-  } = element
+    width,
+    height
+  } = element.getBoundingClientRect()
+
+  const offsetLeft = getOffsetLeft(element)
+  const offsetTop = getOffsetTop(element)
 
   return {
     width,
     height,
-    left,
-    top,
-    right: (left + width),
-    bottom: (top + height)
+    left: offsetLeft,
+    top: offsetTop,
+    right: (offsetLeft + width),
+    bottom: (offsetTop + height)
   }
 }
 

@@ -1,3 +1,6 @@
+export function getOffsetParentElement (element: SVGElement): Element
+export function getOffsetLeft (): number
+export function getOffsetTop (): number
 export function getScrollingElement (): ScrollingElement
 export function getViewportRect (): CenterCenterRect
 export function getElementRect (element: Element): CenterCenterRect
