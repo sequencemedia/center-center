@@ -1,12 +1,13 @@
-export function getOffsetParentElement (element: SVGElement): Element
-export function getOffsetLeft (): number
-export function getOffsetTop (): number
+export function getParentElementForOffsetLeft (element: SVGElement): Element
+export function getParentElementForOffsetTop (element: SVGElement): Element
+export function getLeft (element: Element | SVGElement): number
+export function getTop (element: Element | SVGElement): number
 export function getScrollingElement (): ScrollingElement
 export function getViewportRect (): CenterCenterRect
-export function getElementRect (element: Element): CenterCenterRect
-export function getRects (container: Element, target: Element): CenterCenterRects
-export function calculateLeft ({ viewport: { left: viewportL, right: viewportR }, container: { width: containerW, left: containerL, right: containerR }, target: { width: targetW } }: CenterCenterRects): number
-export function calculateTop ({ viewport: { top: viewportT, bottom: viewportB }, container: { height: containerH, top: containerT, bottom: containerB }, target: { height: targetH } }: CenterCenterRects): number
+export function getElementRect (element: Element | SVGElement): CenterCenterRect
+export function getRects (container: Element, target: Element | SVGElement): CenterCenterRects
+export function calculateLeft (rects: CenterCenterRects): number
+export function calculateTop (rects: CenterCenterRects): number
 
 /**
  *  The document `scrollingElement`
