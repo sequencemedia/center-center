@@ -23,7 +23,7 @@
     "lint:mjs:fix": "npm run lint:mjs -- --fix",
     "lint:mts:fix": "npm run lint:mts -- --fix",
     "test": "cross-env NODE_ENV=test mocha test --recursive",
-    "prepare": "husky install",
+    "prepare": "husky",
     "types": "tsc",
     "start": "DEBUG=center-center* nodemon docs/index.mjs --watch ."
   },
@@ -35,7 +35,7 @@
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-env": "^7.23.9",
-    "@sequencemedia/hooks": "^1.0.479",
+    "@sequencemedia/hooks": "^1.0.480",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "@typescript-eslint/parser": "^7.0.1",
     "chai": "^5.1.0",
