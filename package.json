@@ -17,8 +17,8 @@
   },
   "scripts": {
     "lint": "run-s lint:mjs lint:mts",
-    "lint:mjs": "cross-env NODE_ENV=production eslint . --ext .mjs,.cjs",
-    "lint:mts": "cross-env NODE_ENV=production eslint . --ext .mts,.cts",
+    "lint:mjs": "eslint . --ext .mjs,.cjs",
+    "lint:mts": "eslint . --ext .mts,.cts",
     "lint:fix": "run-s lint:mjs:fix lint:mts:fix",
     "lint:mjs:fix": "npm run lint:mjs -- --fix",
     "lint:mts:fix": "npm run lint:mts -- --fix",
