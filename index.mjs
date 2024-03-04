@@ -129,10 +129,10 @@ export function getViewportRect () {
   } = getScrollingElement()
 
   return {
-    width,
-    height,
     left,
     top,
+    width,
+    height,
     right: (left + width),
     bottom: (top + height)
   }
@@ -146,18 +146,25 @@ export function getViewportRect () {
 */
 export function getElementRect (element) {
   const {
+    scrollLeft: l,
+    scrollTop: t
+  } = getScrollingElement()
+
+  const {
+    x,
+    y,
     width,
     height
   } = element.getBoundingClientRect()
 
-  const left = getLeft(element)
-  const top = getTop(element)
+  const left = l + x
+  const top = t + y
 
   return {
-    width,
-    height,
     left,
     top,
+    width,
+    height,
     right: (left + width),
     bottom: (top + height)
   }
@@ -190,8 +197,8 @@ export function calculateLeft ({
     right: viewportR
   },
   container: {
-    width: containerW,
     left: containerL,
+    width: containerW,
     right: containerR
   },
   target: {
@@ -221,8 +228,8 @@ export function calculateTop ({
     bottom: viewportB
   },
   container: {
-    height: containerH,
     top: containerT,
+    height: containerH,
     bottom: containerB
   },
   target: {

@@ -40,6 +40,7 @@ describe('`center-center`', () => {
     const mockParentElement = {
       offsetLeft: 'MOCK OFFSET LEFT'
     }
+
     const mockElement = {
       parentElement: mockParentElement
     }
@@ -56,6 +57,7 @@ describe('`center-center`', () => {
     const mockParentElement = {
       offsetTop: 'MOCK OFFSET TOP'
     }
+
     const mockElement = {
       parentElement: mockParentElement
     }
@@ -228,358 +230,117 @@ describe('`center-center`', () => {
   })
 
   describe('`getElementRect()`', () => {
-    describe('Element has `offsetLeft`', () => {
-      const mockElement = {
-        offsetLeft: 'MOCK OFFSET LEFT',
-        offsetTop: 'MOCK OFFSET TOP',
-        offsetWidth: 'MOCK OFFSET WIDTH',
-        offsetHeight: 'MOCK OFFSET HEIGHT',
-        parentElement: {
-          offsetLeft: 'MOCK PARENT ELEMENT OFFSET LEFT',
-          offsetTop: 'MOCK PARENT ELEMENT OFFSET TOP'
-        },
-        getBoundingClientRect () {
-          return {
-            width: 'MOCK WIDTH',
-            height: 'MOCK HEIGHT',
-            left: 2,
-            top: 2
-          }
+    beforeEach(() => {
+      global.document = {
+        scrollingElement: {
+          scrollLeft: 'MOCK SCROLL LEFT',
+          scrollTop: 'MOCK SCROLL TOP'
         }
       }
-
-      it('returns an object', () => {
-        return (
-          expect(getElementRect(mockElement))
-            .to.eql({
-              left: 'MOCK OFFSET LEFT',
-              top: 'MOCK OFFSET TOP',
-              width: 'MOCK WIDTH',
-              height: 'MOCK HEIGHT',
-              right: 'MOCK OFFSET LEFTMOCK WIDTH',
-              bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
-            })
-        )
-      })
     })
 
-    describe('Element has `offsetTop`', () => {
-      const mockElement = {
-        offsetLeft: 'MOCK OFFSET LEFT',
-        offsetTop: 'MOCK OFFSET TOP',
-        offsetWidth: 'MOCK OFFSET WIDTH',
-        offsetHeight: 'MOCK OFFSET HEIGHT',
-        parentElement: {
-          offsetLeft: 'MOCK PARENT ELEMENT OFFSET LEFT',
-          offsetTop: 'MOCK PARENT ELEMENT OFFSET TOP'
-        },
-        getBoundingClientRect () {
-          return {
-            width: 'MOCK WIDTH',
-            height: 'MOCK HEIGHT',
-            left: 2,
-            top: 2
-          }
-        }
-      }
-
-      it('returns an object', () => {
-        return (
-          expect(getElementRect(mockElement))
-            .to.eql({
-              left: 'MOCK OFFSET LEFT',
-              top: 'MOCK OFFSET TOP',
-              width: 'MOCK WIDTH',
-              height: 'MOCK HEIGHT',
-              right: 'MOCK OFFSET LEFTMOCK WIDTH',
-              bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
-            })
-        )
-      })
+    afterEach(() => {
+      delete global.document
     })
 
-    describe('Element does not have `offsetLeft` nor `offsetTop`', () => {
-      const mockElement = {
-        parentElement: {
-          offsetLeft: 2,
-          offsetTop: 4
-        },
-        getBoundingClientRect () {
-          return {
-            width: 4,
-            height: 2,
-            left: -2,
-            top: -2
-          }
+    const mockElement = {
+      getBoundingClientRect () {
+        return {
+          x: 'MOCK ELEMENT X',
+          y: 'MOCK ELEMENT Y',
+          width: 'MOCK ELEMENT WIDTH',
+          height: 'MOCK ELEMENT HEIGHT'
         }
       }
+    }
 
-      it('returns an object', () => {
-        return (
-          expect(getElementRect(mockElement))
-            .to.eql({
-              left: 4,
-              top: 6,
-              width: 4,
-              height: 2,
-              right: 8,
-              bottom: 8
-            })
-        )
-      })
+    it('returns an object', () => {
+      return (
+        expect(getElementRect(mockElement))
+          .to.eql({
+            left: 'MOCK SCROLL LEFTMOCK ELEMENT X',
+            top: 'MOCK SCROLL TOPMOCK ELEMENT Y',
+            width: 'MOCK ELEMENT WIDTH',
+            height: 'MOCK ELEMENT HEIGHT',
+            right: 'MOCK SCROLL LEFTMOCK ELEMENT XMOCK ELEMENT WIDTH',
+            bottom: 'MOCK SCROLL TOPMOCK ELEMENT YMOCK ELEMENT HEIGHT'
+          })
+      )
     })
   })
 
   describe('`getRects()`', () => {
-    describe('Element has an `offsetLeft`', () => {
-      const mockContainer = {
-        offsetLeft: 'MOCK OFFSET LEFT',
-        offsetTop: 'MOCK OFFSET TOP',
-        offsetWidth: 'MOCK OFFSET WIDTH',
-        offsetHeight: 'MOCK OFFSET HEIGHT',
-        getBoundingClientRect () {
-          return {
-            width: 'MOCK WIDTH',
-            height: 'MOCK HEIGHT'
-          }
+    const mockContainer = {
+      getBoundingClientRect () {
+        return {
+          x: 'MOCK CONTAINER X',
+          y: 'MOCK CONTAINER Y',
+          width: 'MOCK CONTAINER WIDTH',
+          height: 'MOCK CONTAINER HEIGHT'
         }
       }
+    }
 
-      const mockTarget = {
-        offsetLeft: 1,
-        offsetTop: 2,
-        offsetWidth: 3,
-        offsetHeight: 4,
-        parentElement: {
-          offsetLeft: 5,
-          offsetTop: 6
-        },
-        getBoundingClientRect () {
-          return {
-            width: 10,
-            height: 9,
-            left: -8,
-            top: -7
-          }
+    const mockTarget = {
+      getBoundingClientRect () {
+        return {
+          x: 'MOCK TARGET X',
+          y: 'MOCK TARGET Y',
+          width: 'MOCK TARGET WIDTH',
+          height: 'MOCK TARGET HEIGHT'
         }
       }
+    }
 
-      beforeEach(() => {
-        global.window = {
-          innerWidth: 'MOCK INNER WIDTH',
-          innerHeight: 'MOCK INNER HEIGHT'
+    beforeEach(() => {
+      global.window = {
+        innerWidth: 'MOCK INNER WIDTH',
+        innerHeight: 'MOCK INNER HEIGHT'
+      }
+
+      global.document = {
+        scrollingElement: {
+          scrollLeft: 'MOCK SCROLL LEFT',
+          scrollTop: 'MOCK SCROLL TOP'
         }
-
-        global.document = {
-          scrollingElement: {
-            scrollLeft: 'MOCK SCROLL LEFT',
-            scrollTop: 'MOCK SCROLL TOP'
-          }
-        }
-      })
-
-      afterEach(() => {
-        delete global.window
-        delete global.document
-      })
-
-      it('returns an object', () => {
-        return (
-          expect(getRects(mockContainer, mockTarget))
-            .to.eql({
-              viewport: {
-                top: 'MOCK SCROLL TOP',
-                right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
-                bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
-                left: 'MOCK SCROLL LEFT',
-                width: 'MOCK INNER WIDTH',
-                height: 'MOCK INNER HEIGHT'
-              },
-              container: {
-                left: 'MOCK OFFSET LEFT',
-                top: 'MOCK OFFSET TOP',
-                width: 'MOCK WIDTH',
-                height: 'MOCK HEIGHT',
-                right: 'MOCK OFFSET LEFTMOCK WIDTH',
-                bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
-              },
-              target: {
-                left: 1,
-                top: 2,
-                width: 10,
-                height: 9,
-                right: 11,
-                bottom: 11
-              }
-            })
-        )
-      })
+      }
     })
 
-    describe('Element has an `offsetTop`', () => {
-      const mockContainer = {
-        offsetLeft: 'MOCK OFFSET LEFT',
-        offsetTop: 'MOCK OFFSET TOP',
-        offsetWidth: 'MOCK OFFSET WIDTH',
-        offsetHeight: 'MOCK OFFSET HEIGHT',
-        getBoundingClientRect () {
-          return {
-            width: 'MOCK WIDTH',
-            height: 'MOCK HEIGHT'
-          }
-        }
-      }
-
-      const mockTarget = {
-        offsetLeft: 1,
-        offsetTop: 2,
-        offsetWidth: 3,
-        offsetHeight: 4,
-        parentElement: {
-          offsetLeft: 5,
-          offsetTop: 6
-        },
-        getBoundingClientRect () {
-          return {
-            width: 10,
-            height: 9,
-            left: -8,
-            top: -7
-          }
-        }
-      }
-
-      beforeEach(() => {
-        global.window = {
-          innerWidth: 'MOCK INNER WIDTH',
-          innerHeight: 'MOCK INNER HEIGHT'
-        }
-
-        global.document = {
-          scrollingElement: {
-            scrollLeft: 'MOCK SCROLL LEFT',
-            scrollTop: 'MOCK SCROLL TOP'
-          }
-        }
-      })
-
-      afterEach(() => {
-        delete global.window
-        delete global.document
-      })
-
-      it('returns an object', () => {
-        return (
-          expect(getRects(mockContainer, mockTarget))
-            .to.eql({
-              viewport: {
-                top: 'MOCK SCROLL TOP',
-                right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
-                bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
-                left: 'MOCK SCROLL LEFT',
-                width: 'MOCK INNER WIDTH',
-                height: 'MOCK INNER HEIGHT'
-              },
-              container: {
-                left: 'MOCK OFFSET LEFT',
-                top: 'MOCK OFFSET TOP',
-                width: 'MOCK WIDTH',
-                height: 'MOCK HEIGHT',
-                right: 'MOCK OFFSET LEFTMOCK WIDTH',
-                bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
-              },
-              target: {
-                left: 1,
-                top: 2,
-                width: 10,
-                height: 9,
-                right: 11,
-                bottom: 11
-              }
-            })
-        )
-      })
+    afterEach(() => {
+      delete global.window
+      delete global.document
     })
 
-    describe('Element does not have `offsetLeft` nor `offsetTop`', () => {
-      const mockContainer = {
-        offsetLeft: 'MOCK OFFSET LEFT',
-        offsetTop: 'MOCK OFFSET TOP',
-        offsetWidth: 'MOCK OFFSET WIDTH',
-        offsetHeight: 'MOCK OFFSET HEIGHT',
-        getBoundingClientRect () {
-          return {
-            width: 'MOCK WIDTH',
-            height: 'MOCK HEIGHT'
-          }
-        }
-      }
-
-      const mockTarget = {
-        parentElement: {
-          offsetLeft: 2,
-          offsetTop: 4
-        },
-        getBoundingClientRect () {
-          return {
-            width: 4,
-            height: 2,
-            left: -2,
-            top: -2
-          }
-        }
-      }
-
-      beforeEach(() => {
-        global.window = {
-          innerWidth: 'MOCK INNER WIDTH',
-          innerHeight: 'MOCK INNER HEIGHT'
-        }
-
-        global.document = {
-          scrollingElement: {
-            scrollLeft: 'MOCK SCROLL LEFT',
-            scrollTop: 'MOCK SCROLL TOP'
-          }
-        }
-      })
-
-      afterEach(() => {
-        delete global.window
-        delete global.document
-      })
-
-      it('returns an object', () => {
-        return (
-          expect(getRects(mockContainer, mockTarget))
-            .to.eql({
-              viewport: {
-                top: 'MOCK SCROLL TOP',
-                right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
-                bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
-                left: 'MOCK SCROLL LEFT',
-                width: 'MOCK INNER WIDTH',
-                height: 'MOCK INNER HEIGHT'
-              },
-              container: {
-                left: 'MOCK OFFSET LEFT',
-                top: 'MOCK OFFSET TOP',
-                width: 'MOCK WIDTH',
-                height: 'MOCK HEIGHT',
-                right: 'MOCK OFFSET LEFTMOCK WIDTH',
-                bottom: 'MOCK OFFSET TOPMOCK HEIGHT'
-              },
-              target: {
-                left: 4,
-                top: 6,
-                width: 4,
-                height: 2,
-                right: 8,
-                bottom: 8
-              }
-            })
-        )
-      })
+    it('returns an object', () => {
+      return (
+        expect(getRects(mockContainer, mockTarget))
+          .to.eql({
+            viewport: {
+              top: 'MOCK SCROLL TOP',
+              right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
+              bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
+              left: 'MOCK SCROLL LEFT',
+              width: 'MOCK INNER WIDTH',
+              height: 'MOCK INNER HEIGHT'
+            },
+            container: {
+              left: 'MOCK SCROLL LEFTMOCK CONTAINER X',
+              top: 'MOCK SCROLL TOPMOCK CONTAINER Y',
+              width: 'MOCK CONTAINER WIDTH',
+              height: 'MOCK CONTAINER HEIGHT',
+              right: 'MOCK SCROLL LEFTMOCK CONTAINER XMOCK CONTAINER WIDTH',
+              bottom: 'MOCK SCROLL TOPMOCK CONTAINER YMOCK CONTAINER HEIGHT'
+            },
+            target: {
+              left: 'MOCK SCROLL LEFTMOCK TARGET X',
+              top: 'MOCK SCROLL TOPMOCK TARGET Y',
+              width: 'MOCK TARGET WIDTH',
+              height: 'MOCK TARGET HEIGHT',
+              right: 'MOCK SCROLL LEFTMOCK TARGET XMOCK TARGET WIDTH',
+              bottom: 'MOCK SCROLL TOPMOCK TARGET YMOCK TARGET HEIGHT'
+            }
+          })
+      )
     })
   })
 
