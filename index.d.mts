@@ -21,10 +21,10 @@ export interface ScrollingElement {
  * A Center Center `Rect`
  */
 export interface CenterCenterRect {
-  width: number
-  height: number
   left: number
   top: number
+  width: number
+  height: number
   right: number
   bottom: number
 }
