@@ -170,8 +170,8 @@ export function getSVGElementRect (element) {
 */
 export function getDOMElementRect (element) {
   const {
-    scrollLeft: l,
-    scrollTop: t
+    scrollLeft,
+    scrollTop
   } = getScrollingElement()
 
   const {
@@ -181,8 +181,8 @@ export function getDOMElementRect (element) {
     height
   } = element.getBoundingClientRect()
 
-  const left = l + x
-  const top = t + y
+  const left = (scrollLeft + x)
+  const top = (scrollTop + y)
 
   return {
     left,
