@@ -139,12 +139,36 @@ export function getViewportRect () {
 }
 
 /**
+ * Gets a `Rect` for an SVG element
+ *
+ * @param {Element} element
+ * @returns {CenterCenterRect}
+*/
+export function getSVGElementRect (element) {
+  const {
+    x: left,
+    y: top,
+    width,
+    height
+  } = element.getBBox()
+
+  return {
+    left,
+    top,
+    width,
+    height,
+    right: (left + width),
+    bottom: (top + height)
+  }
+}
+
+/**
  * Gets a `Rect` for a DOM element
  *
  * @param {Element} element
  * @returns {CenterCenterRect}
 */
-export function getElementRect (element) {
+export function getDOMElementRect (element) {
   const {
     scrollLeft: l,
     scrollTop: t
@@ -171,6 +195,48 @@ export function getElementRect (element) {
 }
 
 /**
+ * Gets a `Rect` for a DOM element
+ *
+ * @param {Element} element
+ * @returns {CenterCenterRect}
+*/
+export function getElementRect (element) {
+  return (
+    getDOMElementRect(element)
+  )
+}
+
+/**
+ * Gets `Rects` for the viewport as well as the DOM container and DOM target elements
+ *
+ * @param {Element} container
+ * @param {Element} target
+ * @returns {CenterCenterRects}
+ */
+export function getSVGRects (container, target) {
+  return {
+    viewport: getViewportRect(),
+    container: getDOMElementRect(container),
+    target: getSVGElementRect(target)
+  }
+}
+
+/**
+ * Gets `Rects` for the viewport as well as the DOM container and DOM target elements
+ *
+ * @param {Element} container
+ * @param {Element} target
+ * @returns {CenterCenterRects}
+ */
+export function getDOMRects (container, target) {
+  return {
+    viewport: getViewportRect(),
+    container: getDOMElementRect(container),
+    target: getDOMElementRect(target)
+  }
+}
+
+/**
  * Gets `Rects` for the viewport as well as the container and target elements
  *
  * @param {Element} container
@@ -178,11 +244,9 @@ export function getElementRect (element) {
  * @returns {CenterCenterRects}
  */
 export function getRects (container, target) {
-  return {
-    viewport: getViewportRect(),
-    container: getElementRect(container),
-    target: getElementRect(target)
-  }
+  return (
+    getDOMRects(container, target)
+  )
 }
 
 /**

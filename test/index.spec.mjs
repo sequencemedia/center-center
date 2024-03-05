@@ -9,7 +9,11 @@ import {
   getTop,
   getScrollingElement,
   getViewportRect,
+  getSVGElementRect,
+  getDOMElementRect,
   getElementRect,
+  getDOMRects,
+  getSVGRects,
   getRects,
   calculateLeft,
   calculateTop
@@ -229,6 +233,73 @@ describe('`center-center`', () => {
     }))
   })
 
+  describe('`getDOMElementRect()`', () => {
+    beforeEach(() => {
+      global.document = {
+        scrollingElement: {
+          scrollLeft: 'MOCK SCROLL LEFT',
+          scrollTop: 'MOCK SCROLL TOP'
+        }
+      }
+    })
+
+    afterEach(() => {
+      delete global.document
+    })
+
+    const mockElement = {
+      getBoundingClientRect () {
+        return {
+          x: 'MOCK ELEMENT X',
+          y: 'MOCK ELEMENT Y',
+          width: 'MOCK ELEMENT WIDTH',
+          height: 'MOCK ELEMENT HEIGHT'
+        }
+      }
+    }
+
+    it('returns an object', () => {
+      return (
+        expect(getDOMElementRect(mockElement))
+          .to.eql({
+            left: 'MOCK SCROLL LEFTMOCK ELEMENT X',
+            top: 'MOCK SCROLL TOPMOCK ELEMENT Y',
+            width: 'MOCK ELEMENT WIDTH',
+            height: 'MOCK ELEMENT HEIGHT',
+            right: 'MOCK SCROLL LEFTMOCK ELEMENT XMOCK ELEMENT WIDTH',
+            bottom: 'MOCK SCROLL TOPMOCK ELEMENT YMOCK ELEMENT HEIGHT'
+          })
+      )
+    })
+  })
+
+  describe('`getSVGElementRect()`', () => {
+    const mockElement = {
+      getBBox () {
+        return {
+          x: 'MOCK ELEMENT X',
+          y: 'MOCK ELEMENT Y',
+          width: 'MOCK ELEMENT WIDTH',
+          height: 'MOCK ELEMENT HEIGHT'
+        }
+      }
+    }
+
+    it('returns an object', () => {
+      return (
+        expect(getSVGElementRect(mockElement))
+          .to.eql({
+            left: 'MOCK ELEMENT X',
+            top: 'MOCK ELEMENT Y',
+            width: 'MOCK ELEMENT WIDTH',
+            height: 'MOCK ELEMENT HEIGHT',
+            right: 'MOCK ELEMENT XMOCK ELEMENT WIDTH',
+            bottom: 'MOCK ELEMENT YMOCK ELEMENT HEIGHT'
+          })
+      )
+    })
+  })
+
   describe('`getElementRect()`', () => {
     beforeEach(() => {
       global.document = {
@@ -264,6 +335,156 @@ describe('`center-center`', () => {
             height: 'MOCK ELEMENT HEIGHT',
             right: 'MOCK SCROLL LEFTMOCK ELEMENT XMOCK ELEMENT WIDTH',
             bottom: 'MOCK SCROLL TOPMOCK ELEMENT YMOCK ELEMENT HEIGHT'
+          })
+      )
+    })
+  })
+
+  describe('`getSVGRects()`', () => {
+    const mockContainer = {
+      getBoundingClientRect () {
+        return {
+          x: 'MOCK CONTAINER X',
+          y: 'MOCK CONTAINER Y',
+          width: 'MOCK CONTAINER WIDTH',
+          height: 'MOCK CONTAINER HEIGHT'
+        }
+      }
+    }
+
+    const mockTarget = {
+      getBBox () {
+        return {
+          x: 'MOCK TARGET X',
+          y: 'MOCK TARGET Y',
+          width: 'MOCK TARGET WIDTH',
+          height: 'MOCK TARGET HEIGHT'
+        }
+      }
+    }
+
+    beforeEach(() => {
+      global.window = {
+        innerWidth: 'MOCK INNER WIDTH',
+        innerHeight: 'MOCK INNER HEIGHT'
+      }
+
+      global.document = {
+        scrollingElement: {
+          scrollLeft: 'MOCK SCROLL LEFT',
+          scrollTop: 'MOCK SCROLL TOP'
+        }
+      }
+    })
+
+    afterEach(() => {
+      delete global.window
+      delete global.document
+    })
+
+    it('returns an object', () => {
+      return (
+        expect(getSVGRects(mockContainer, mockTarget))
+          .to.eql({
+            viewport: {
+              top: 'MOCK SCROLL TOP',
+              right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
+              bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
+              left: 'MOCK SCROLL LEFT',
+              width: 'MOCK INNER WIDTH',
+              height: 'MOCK INNER HEIGHT'
+            },
+            container: {
+              left: 'MOCK SCROLL LEFTMOCK CONTAINER X',
+              top: 'MOCK SCROLL TOPMOCK CONTAINER Y',
+              width: 'MOCK CONTAINER WIDTH',
+              height: 'MOCK CONTAINER HEIGHT',
+              right: 'MOCK SCROLL LEFTMOCK CONTAINER XMOCK CONTAINER WIDTH',
+              bottom: 'MOCK SCROLL TOPMOCK CONTAINER YMOCK CONTAINER HEIGHT'
+            },
+            target: {
+              left: 'MOCK TARGET X',
+              top: 'MOCK TARGET Y',
+              width: 'MOCK TARGET WIDTH',
+              height: 'MOCK TARGET HEIGHT',
+              right: 'MOCK TARGET XMOCK TARGET WIDTH',
+              bottom: 'MOCK TARGET YMOCK TARGET HEIGHT'
+            }
+          })
+      )
+    })
+  })
+
+  describe('`getDOMRects()`', () => {
+    const mockContainer = {
+      getBoundingClientRect () {
+        return {
+          x: 'MOCK CONTAINER X',
+          y: 'MOCK CONTAINER Y',
+          width: 'MOCK CONTAINER WIDTH',
+          height: 'MOCK CONTAINER HEIGHT'
+        }
+      }
+    }
+
+    const mockTarget = {
+      getBoundingClientRect () {
+        return {
+          x: 'MOCK TARGET X',
+          y: 'MOCK TARGET Y',
+          width: 'MOCK TARGET WIDTH',
+          height: 'MOCK TARGET HEIGHT'
+        }
+      }
+    }
+
+    beforeEach(() => {
+      global.window = {
+        innerWidth: 'MOCK INNER WIDTH',
+        innerHeight: 'MOCK INNER HEIGHT'
+      }
+
+      global.document = {
+        scrollingElement: {
+          scrollLeft: 'MOCK SCROLL LEFT',
+          scrollTop: 'MOCK SCROLL TOP'
+        }
+      }
+    })
+
+    afterEach(() => {
+      delete global.window
+      delete global.document
+    })
+
+    it('returns an object', () => {
+      return (
+        expect(getDOMRects(mockContainer, mockTarget))
+          .to.eql({
+            viewport: {
+              top: 'MOCK SCROLL TOP',
+              right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
+              bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
+              left: 'MOCK SCROLL LEFT',
+              width: 'MOCK INNER WIDTH',
+              height: 'MOCK INNER HEIGHT'
+            },
+            container: {
+              left: 'MOCK SCROLL LEFTMOCK CONTAINER X',
+              top: 'MOCK SCROLL TOPMOCK CONTAINER Y',
+              width: 'MOCK CONTAINER WIDTH',
+              height: 'MOCK CONTAINER HEIGHT',
+              right: 'MOCK SCROLL LEFTMOCK CONTAINER XMOCK CONTAINER WIDTH',
+              bottom: 'MOCK SCROLL TOPMOCK CONTAINER YMOCK CONTAINER HEIGHT'
+            },
+            target: {
+              left: 'MOCK SCROLL LEFTMOCK TARGET X',
+              top: 'MOCK SCROLL TOPMOCK TARGET Y',
+              width: 'MOCK TARGET WIDTH',
+              height: 'MOCK TARGET HEIGHT',
+              right: 'MOCK SCROLL LEFTMOCK TARGET XMOCK TARGET WIDTH',
+              bottom: 'MOCK SCROLL TOPMOCK TARGET YMOCK TARGET HEIGHT'
+            }
           })
       )
     })
