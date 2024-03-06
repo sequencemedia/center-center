@@ -15,7 +15,7 @@
 			import debug from 'debug'
 
 			import {
-				getRects,
+				createRects,
 				calculateLeft,
 				calculateTop
 			} from 'center-center'
@@ -73,7 +73,7 @@
 				log('render')
 
 				window.requestAnimationFrame(() => {
-					const rects = getRects(container, target)
+					const rects = createRects(container, target)
 					const left = calculateLeft(rects)
 					const top = calculateTop(rects)
 

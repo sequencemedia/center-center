@@ -7,14 +7,27 @@ import {
   getParentElementForOffsetTop,
   getLeft,
   getTop,
+  getRectLeft,
+  getRectTop,
+  getRectWidth,
+  getRectHeight,
   getScrollingElement,
+  createViewportRect,
+  createSVGElementRect,
+  createDOMElementRect,
+  createElementRect,
+  createDOMRects,
+  createSVGRects,
+  createRects,
   getViewportRect,
-  getSVGElementRect,
-  getDOMElementRect,
-  getElementRect,
-  getDOMRects,
-  getSVGRects,
-  getRects,
+  getContainerRect,
+  getTargetRect,
+  calculateBoundaryX,
+  calculateBoundaryY,
+  calculateContainerX,
+  calculateContainerY,
+  calculateTargetX,
+  calculateTargetY,
   calculateLeft,
   calculateTop
 } from '#center-center'
@@ -30,11 +43,41 @@ describe('`center-center`', () => {
 
   it('exports `getScrollingElement`', () => expect(getScrollingElement).to.be.a('function'))
 
+  it('exports `getRectLeft`', () => expect(getRectLeft).to.be.a('function'))
+
+  it('exports `getRectTop`', () => expect(getRectTop).to.be.a('function'))
+
+  it('exports `getRectWidth`', () => expect(getRectWidth).to.be.a('function'))
+
+  it('exports `getRectHeight`', () => expect(getRectHeight).to.be.a('function'))
+
+  it('exports `createViewportRect`', () => expect(createViewportRect).to.be.a('function'))
+
+  it('exports `createDOMElementRect`', () => expect(createDOMElementRect).to.be.a('function'))
+
+  it('exports `createSVGElementRect`', () => expect(createSVGElementRect).to.be.a('function'))
+
+  it('exports `createElementRect`', () => expect(createElementRect).to.be.a('function'))
+
+  it('exports `createRects`', () => expect(createRects).to.be.a('function'))
+
   it('exports `getViewportRect`', () => expect(getViewportRect).to.be.a('function'))
 
-  it('exports `getElementRect`', () => expect(getElementRect).to.be.a('function'))
+  it('exports `getContainerRect`', () => expect(getContainerRect).to.be.a('function'))
 
-  it('exports `getRects`', () => expect(getRects).to.be.a('function'))
+  it('exports `getTargetRect`', () => expect(getTargetRect).to.be.a('function'))
+
+  it('exports `calculateBoundaryX`', () => expect(calculateBoundaryX).to.be.a('function'))
+
+  it('exports `calculateBoundaryY`', () => expect(calculateBoundaryY).to.be.a('function'))
+
+  it('exports `calculateContainerX`', () => expect(calculateContainerX).to.be.a('function'))
+
+  it('exports `calculateContainerY`', () => expect(calculateContainerY).to.be.a('function'))
+
+  it('exports `calculateTargetX`', () => expect(calculateTargetX).to.be.a('function'))
+
+  it('exports `calculateTargetY`', () => expect(calculateTargetY).to.be.a('function'))
 
   it('exports `calculateLeft`', () => expect(calculateLeft).to.be.a('function'))
 
@@ -203,7 +246,7 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('`getViewportRect()`', () => {
+  describe('`createViewportRect()`', () => {
     beforeEach(() => {
       global.window = {
         innerWidth: 'MOCK INNER WIDTH',
@@ -223,7 +266,7 @@ describe('`center-center`', () => {
       delete global.document
     })
 
-    it('returns an object', () => expect(getViewportRect()).to.eql({
+    it('returns an object', () => expect(createViewportRect()).to.eql({
       top: 'MOCK SCROLL TOP',
       right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
       bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
@@ -233,7 +276,7 @@ describe('`center-center`', () => {
     }))
   })
 
-  describe('`getDOMElementRect()`', () => {
+  describe('`createDOMElementRect()`', () => {
     beforeEach(() => {
       global.document = {
         scrollingElement: {
@@ -260,7 +303,7 @@ describe('`center-center`', () => {
 
     it('returns an object', () => {
       return (
-        expect(getDOMElementRect(mockElement))
+        expect(createDOMElementRect(mockElement))
           .to.eql({
             left: 'MOCK SCROLL LEFTMOCK ELEMENT X',
             top: 'MOCK SCROLL TOPMOCK ELEMENT Y',
@@ -273,7 +316,7 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('`getSVGElementRect()`', () => {
+  describe('`createSVGElementRect()`', () => {
     const mockElement = {
       getBBox () {
         return {
@@ -287,7 +330,7 @@ describe('`center-center`', () => {
 
     it('returns an object', () => {
       return (
-        expect(getSVGElementRect(mockElement))
+        expect(createSVGElementRect(mockElement))
           .to.eql({
             left: 'MOCK ELEMENT X',
             top: 'MOCK ELEMENT Y',
@@ -300,7 +343,7 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('`getElementRect()`', () => {
+  describe('`createElementRect()`', () => {
     beforeEach(() => {
       global.document = {
         scrollingElement: {
@@ -327,7 +370,7 @@ describe('`center-center`', () => {
 
     it('returns an object', () => {
       return (
-        expect(getElementRect(mockElement))
+        expect(createElementRect(mockElement))
           .to.eql({
             left: 'MOCK SCROLL LEFTMOCK ELEMENT X',
             top: 'MOCK SCROLL TOPMOCK ELEMENT Y',
@@ -340,7 +383,7 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('`getSVGRects()`', () => {
+  describe('`createSVGRects()`', () => {
     const mockContainer = {
       getBoundingClientRect () {
         return {
@@ -384,7 +427,7 @@ describe('`center-center`', () => {
 
     it('returns an object', () => {
       return (
-        expect(getSVGRects(mockContainer, mockTarget))
+        expect(createSVGRects(mockContainer, mockTarget))
           .to.eql({
             viewport: {
               top: 'MOCK SCROLL TOP',
@@ -415,7 +458,7 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('`getDOMRects()`', () => {
+  describe('`createDOMRects()`', () => {
     const mockContainer = {
       getBoundingClientRect () {
         return {
@@ -459,7 +502,7 @@ describe('`center-center`', () => {
 
     it('returns an object', () => {
       return (
-        expect(getDOMRects(mockContainer, mockTarget))
+        expect(createDOMRects(mockContainer, mockTarget))
           .to.eql({
             viewport: {
               top: 'MOCK SCROLL TOP',
@@ -490,7 +533,7 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('`getRects()`', () => {
+  describe('`createRects()`', () => {
     const mockContainer = {
       getBoundingClientRect () {
         return {
@@ -534,7 +577,7 @@ describe('`center-center`', () => {
 
     it('returns an object', () => {
       return (
-        expect(getRects(mockContainer, mockTarget))
+        expect(createRects(mockContainer, mockTarget))
           .to.eql({
             viewport: {
               top: 'MOCK SCROLL TOP',
