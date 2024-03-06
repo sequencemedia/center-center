@@ -4,7 +4,11 @@ export function getLeft (element: Element | SVGElement): number
 export function getTop (element: Element | SVGElement): number
 export function getScrollingElement (): ScrollingElement
 export function getViewportRect (): CenterCenterRect
+export function getDOMElementRect (element: Element): CenterCenterRect
+export function getSVGElementRect (element: SVGElement): CenterCenterRect
 export function getElementRect (element: Element | SVGElement): CenterCenterRect
+export function getDOMRects (container: Element, target: Element): CenterCenterRects
+export function getSVGRects (container: Element, target: SVGElement): CenterCenterRects
 export function getRects (container: Element, target: Element | SVGElement): CenterCenterRects
 export function calculateLeft (rects: CenterCenterRects): number
 export function calculateTop (rects: CenterCenterRects): number
