@@ -4,97 +4,6 @@
  * @typedef {import('.').CenterCenterRects} CenterCenterRects
  */
 
-const leftMap = new WeakMap()
-const topMap = new WeakMap()
-
-/**
- * Gets a parent element with `offsetLeft`
- *
- * @param {SVGElement} element
- * @returns {Element}
- */
-export function getParentElementForOffsetLeft (element) {
-  let parentElement = element.parentElement
-
-  while (!Reflect.has(parentElement, 'offsetLeft')) {
-    parentElement = parentElement.parentElement
-  }
-
-  return parentElement
-}
-
-/**
- * Gets a parent element with `offsetTop`
- *
- * @param {SVGElement} element
- * @returns {Element}
- */
-export function getParentElementForOffsetTop (element) {
-  let parentElement = element.parentElement
-
-  while (!Reflect.has(parentElement, 'offsetTop')) {
-    parentElement = parentElement.parentElement
-  }
-
-  return parentElement
-}
-
-/**
- * Gets the `offsetLeft` from the element or calculates the equivalent with
- * DOMRect `left` and the nearest `offsetLeft` from a parent
- *
- * @param {Element | SVGElement} element
- * @returns {number}
- */
-export function getLeft (element) {
-  if (Reflect.has(element, 'offsetLeft')) {
-    return (
-      Reflect.get(element, 'offsetLeft')
-    )
-  }
-
-  if (!leftMap.has(element)) leftMap.set(element, getParentElementForOffsetLeft(element))
-  const {
-    offsetLeft = 0
-  } = leftMap.get(element)
-
-  const {
-    left
-  } = element.getBoundingClientRect()
-
-  return (
-    offsetLeft - left
-  )
-}
-
-/**
- * Gets the `offsetTop` from the element or calculates the equivalent with
- * DOMRect `top` and the nearest `offsetTop` from a parent
- *
- * @param {Element | SVGElement} element
- * @returns {number}
- */
-export function getTop (element) {
-  if (Reflect.has(element, 'offsetTop')) {
-    return (
-      Reflect.get(element, 'offsetTop')
-    )
-  }
-
-  const {
-    top
-  } = element.getBoundingClientRect()
-
-  if (!topMap.has(element)) topMap.set(element, getParentElementForOffsetTop(element))
-  const {
-    offsetTop = 0
-  } = topMap.get(element)
-
-  return (
-    offsetTop - top
-  )
-}
-
 /**
  * Gets the document `scrollingElement` (or a valid alternative)
  *
@@ -181,7 +90,7 @@ export function createViewportRect () {
 /**
  * Creates a `Rect` for an SVG element
  *
- * @param {Element} element
+ * @param {SVGElement} element
  * @returns {CenterCenterRect}
 */
 export function createSVGElementRect (element) {
@@ -235,22 +144,10 @@ export function createDOMElementRect (element) {
 }
 
 /**
- * Creates a `Rect` for a DOM element
- *
- * @param {Element} element
- * @returns {CenterCenterRect}
-*/
-export function createElementRect (element) {
-  return (
-    createDOMElementRect(element)
-  )
-}
-
-/**
- * Creates `Rects` for the viewport as well as the DOM container and DOM target elements
+ * Creates `Rects` for the viewport as well as the DOM container and SVG target elements
  *
  * @param {Element} container
- * @param {Element} target
+ * @param {SVGElement} target
  * @returns {CenterCenterRects}
  */
 export function createSVGRects (container, target) {
@@ -277,22 +174,11 @@ export function createDOMRects (container, target) {
 }
 
 /**
- * Creates `Rects` for the viewport as well as the container and target elements
+ * Calculates the right-most boundary `x` coordinate of the target in the container
  *
- * @param {Element} container
- * @param {Element} target
- * @returns {CenterCenterRects}
- */
-export function createRects (container, target) {
-  return (
-    createDOMRects(container, target)
-  )
-}
-
-/**
- * Calculates the boundary `x` coordinate of the target in the container
+ * The range for target `x` is from left-most 0 to right-most boundary, inclusive
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {number}
  */
 export function calculateBoundaryX (rects) {
@@ -303,9 +189,11 @@ export function calculateBoundaryX (rects) {
 }
 
 /**
- * Calculates the boundary `y` coordinate of the target in the container
+ * Calculates the bottom-most boundary `y` coordinate of the target in the container
  *
- * @param {CenterCenterRects}
+ * The range for target `y` is from top-most 0 to bottom-most boundary, inclusive
+ *
+ * @param {CenterCenterRects} rects
  * @returns {number}
  */
 export function calculateBoundaryY (rects) {
@@ -316,9 +204,29 @@ export function calculateBoundaryY (rects) {
 }
 
 /**
+ * Calculates the `x` coordinate of a `Rect`
+ *
+ * @param {CenterCenterRect}
+ * @returns {number}
+ */
+export function calculateRectX ({ left: l, width: w }) {
+  return (l + (w / 2))
+}
+
+/**
+ * Calculates the `y` coordinate of a `Rect`
+ *
+ * @param {CenterCenterRect}
+ * @returns {number}
+ */
+export function calculateRectY ({ top: t, height: h }) {
+  return (t + (h / 2))
+}
+
+/**
  * Calculates the `x` coordinate of the container
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {number}
  */
 export function calculateContainerX ({
@@ -342,7 +250,7 @@ export function calculateContainerX ({
 /**
  * Calculates the `y` coordinate of the container
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {number}
  */
 export function calculateContainerY ({
@@ -366,7 +274,7 @@ export function calculateContainerY ({
 /**
  * Calculates the `x` coordinate of the target
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {number}
  */
 export function calculateTargetX (rects) {
@@ -379,7 +287,7 @@ export function calculateTargetX (rects) {
 /**
  * Calculates the `y` coordinate of the target
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {number}
  */
 export function calculateTargetY (rects) {
@@ -392,7 +300,7 @@ export function calculateTargetY (rects) {
 /**
  * Destructures the viewport `Rect`
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {CenterCenterRect}
  */
 export function getViewportRect ({ viewport }) {
@@ -402,7 +310,7 @@ export function getViewportRect ({ viewport }) {
 /**
  * Destructures the container `Rect`
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {CenterCenterRect}
  */
 export function getContainerRect ({ container }) {
@@ -412,7 +320,7 @@ export function getContainerRect ({ container }) {
 /**
  * Destructures the target `Rect`
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {CenterCenterRect}
  */
 export function getTargetRect ({ target }) {
@@ -420,9 +328,47 @@ export function getTargetRect ({ target }) {
 }
 
 /**
+ * Calculates the target `x` position
+ *
+ * @param {CenterCenterRects} rects
+ * @param {number | undefined} viewBoxW
+ * @param {number | undefined} scale
+ * @returns {number}
+ */
+export function calculateX (rects, viewBoxW = 0, scale = 1) {
+  const targetX = calculateRectX(getTargetRect(rects))
+  const containerX = calculateContainerX(rects)
+  const w = getRectWidth(getContainerRect(rects))
+  const ratio = (viewBoxW / w)
+
+  return (
+    targetX - ((containerX * ratio) / scale)
+  )
+}
+
+/**
+ * Calculates the target `y` position
+ *
+ * @param {CenterCenterRects} rects
+ * @param {number | undefined} viewBoxH
+ * @param {number | undefined} scale
+ * @returns {number}
+ */
+export function calculateY (rects, viewBoxH = 0, scale = 1) {
+  const targetY = calculateRectY(getTargetRect(rects))
+  const containerY = calculateContainerY(rects)
+  const h = getRectHeight(getContainerRect(rects))
+  const ratio = (viewBoxH / h)
+
+  return (
+    targetY - ((containerY * ratio) / scale)
+  )
+}
+
+/**
  * Calculates the target `left` position
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {number}
  */
 export function calculateLeft (rects) {
@@ -437,7 +383,7 @@ export function calculateLeft (rects) {
 /**
  * Calculates the target `top` position
  *
- * @param {CenterCenterRects}
+ * @param {CenterCenterRects} rects
  * @returns {number}
  */
 export function calculateTop (rects) {

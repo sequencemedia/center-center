@@ -3,43 +3,57 @@ import {
 } from 'chai'
 
 import {
-  getParentElementForOffsetLeft,
-  getParentElementForOffsetTop,
-  getLeft,
-  getTop,
   getRectLeft,
   getRectTop,
   getRectWidth,
   getRectHeight,
   getScrollingElement,
   createViewportRect,
-  createSVGElementRect,
   createDOMElementRect,
-  createElementRect,
+  createSVGElementRect,
   createDOMRects,
   createSVGRects,
-  createRects,
   getViewportRect,
   getContainerRect,
   getTargetRect,
+  calculateRectX,
+  calculateRectY,
   calculateBoundaryX,
   calculateBoundaryY,
   calculateContainerX,
   calculateContainerY,
   calculateTargetX,
   calculateTargetY,
+  calculateX,
+  calculateY,
   calculateLeft,
   calculateTop
 } from '#center-center'
 
 describe('`center-center`', () => {
-  it('exports `getParentElementForOffsetLeft`', () => expect(getParentElementForOffsetLeft).to.be.a('function'))
+  /*
+  class MockElement {
+    getBoundingClientRect () {
+      return {}
+    }
+  }
 
-  it('exports `getParentElementForOffsetTop`', () => expect(getParentElementForOffsetTop).to.be.a('function'))
+  class MockSVGElement extends MockElement {
+    getBBox () {
+      return {}
+    }
+  }
 
-  it('exports `getLeft`', () => expect(getLeft).to.be.a('function'))
+  beforeEach(() => {
+    global.Element = MockElement
+    global.SVGElement = MockSVGElement
+  })
 
-  it('exports `getTop`', () => expect(getTop).to.be.a('function'))
+  afterEach(() => {
+    delete global.Element
+    delete global.SVGElement
+  })
+  */
 
   it('exports `getScrollingElement`', () => expect(getScrollingElement).to.be.a('function'))
 
@@ -57,15 +71,19 @@ describe('`center-center`', () => {
 
   it('exports `createSVGElementRect`', () => expect(createSVGElementRect).to.be.a('function'))
 
-  it('exports `createElementRect`', () => expect(createElementRect).to.be.a('function'))
+  it('exports `createDOMRects`', () => expect(createDOMRects).to.be.a('function'))
 
-  it('exports `createRects`', () => expect(createRects).to.be.a('function'))
+  it('exports `createSVGRects`', () => expect(createSVGRects).to.be.a('function'))
 
   it('exports `getViewportRect`', () => expect(getViewportRect).to.be.a('function'))
 
   it('exports `getContainerRect`', () => expect(getContainerRect).to.be.a('function'))
 
   it('exports `getTargetRect`', () => expect(getTargetRect).to.be.a('function'))
+
+  it('exports `calculateRectX`', () => expect(calculateRectX).to.be.a('function'))
+
+  it('exports `calculateRectY`', () => expect(calculateRectY).to.be.a('function'))
 
   it('exports `calculateBoundaryX`', () => expect(calculateBoundaryX).to.be.a('function'))
 
@@ -79,113 +97,13 @@ describe('`center-center`', () => {
 
   it('exports `calculateTargetY`', () => expect(calculateTargetY).to.be.a('function'))
 
+  it('exports `calculateX`', () => expect(calculateX).to.be.a('function'))
+
+  it('exports `calculateY`', () => expect(calculateY).to.be.a('function'))
+
   it('exports `calculateLeft`', () => expect(calculateLeft).to.be.a('function'))
 
   it('exports `calculateTop`', () => expect(calculateTop).to.be.a('function'))
-
-  describe('`getParentElementForOffsetLeft()`', () => {
-    const mockParentElement = {
-      offsetLeft: 'MOCK OFFSET LEFT'
-    }
-
-    const mockElement = {
-      parentElement: mockParentElement
-    }
-
-    it('returns an element', () => {
-      return (
-        expect(getParentElementForOffsetLeft(mockElement))
-          .to.equal(mockParentElement)
-      )
-    })
-  })
-
-  describe('`getParentElementForOffsetTop()`', () => {
-    const mockParentElement = {
-      offsetTop: 'MOCK OFFSET TOP'
-    }
-
-    const mockElement = {
-      parentElement: mockParentElement
-    }
-
-    it('returns an element', () => {
-      return (
-        expect(getParentElementForOffsetTop(mockElement))
-          .to.equal(mockParentElement)
-      )
-    })
-  })
-
-  describe('`getLeft()`', () => {
-    describe('Element has `offsetLeft`', () => {
-      const mockElement = {
-        offsetLeft: 4
-      }
-
-      it('returns a number', () => {
-        return (
-          expect(getLeft(mockElement))
-            .to.equal(4)
-        )
-      })
-    })
-
-    describe('Element does not have `offsetLeft`', () => {
-      const mockElement = {
-        parentElement: {
-          offsetLeft: 6
-        },
-        getBoundingClientRect () {
-          return {
-            left: 2
-          }
-        }
-      }
-
-      it('returns a number', () => {
-        return (
-          expect(getLeft(mockElement))
-            .to.equal(4)
-        )
-      })
-    })
-  })
-
-  describe('`getTop()`', () => {
-    describe('Element has `offsetTop`', () => {
-      const mockElement = {
-        offsetTop: 4
-      }
-
-      it('returns a number', () => {
-        return (
-          expect(getTop(mockElement))
-            .to.equal(4)
-        )
-      })
-    })
-
-    describe('Element does not have `offsetTop`', () => {
-      const mockElement = {
-        parentElement: {
-          offsetTop: 6
-        },
-        getBoundingClientRect () {
-          return {
-            top: 2
-          }
-        }
-      }
-
-      it('returns a number', () => {
-        return (
-          expect(getTop(mockElement))
-            .to.equal(4)
-        )
-      })
-    })
-  })
 
   describe('`getScrollingElement()`', () => {
     beforeEach(() => {
@@ -343,46 +261,6 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('`createElementRect()`', () => {
-    beforeEach(() => {
-      global.document = {
-        scrollingElement: {
-          scrollLeft: 'MOCK SCROLL LEFT',
-          scrollTop: 'MOCK SCROLL TOP'
-        }
-      }
-    })
-
-    afterEach(() => {
-      delete global.document
-    })
-
-    const mockElement = {
-      getBoundingClientRect () {
-        return {
-          x: 'MOCK ELEMENT X',
-          y: 'MOCK ELEMENT Y',
-          width: 'MOCK ELEMENT WIDTH',
-          height: 'MOCK ELEMENT HEIGHT'
-        }
-      }
-    }
-
-    it('returns an object', () => {
-      return (
-        expect(createElementRect(mockElement))
-          .to.eql({
-            left: 'MOCK SCROLL LEFTMOCK ELEMENT X',
-            top: 'MOCK SCROLL TOPMOCK ELEMENT Y',
-            width: 'MOCK ELEMENT WIDTH',
-            height: 'MOCK ELEMENT HEIGHT',
-            right: 'MOCK SCROLL LEFTMOCK ELEMENT XMOCK ELEMENT WIDTH',
-            bottom: 'MOCK SCROLL TOPMOCK ELEMENT YMOCK ELEMENT HEIGHT'
-          })
-      )
-    })
-  })
-
   describe('`createSVGRects()`', () => {
     const mockContainer = {
       getBoundingClientRect () {
@@ -533,108 +411,99 @@ describe('`center-center`', () => {
     })
   })
 
-  describe('`createRects()`', () => {
-    const mockContainer = {
-      getBoundingClientRect () {
-        return {
-          x: 'MOCK CONTAINER X',
-          y: 'MOCK CONTAINER Y',
-          width: 'MOCK CONTAINER WIDTH',
-          height: 'MOCK CONTAINER HEIGHT'
-        }
-      }
-    }
-
-    const mockTarget = {
-      getBoundingClientRect () {
-        return {
-          x: 'MOCK TARGET X',
-          y: 'MOCK TARGET Y',
-          width: 'MOCK TARGET WIDTH',
-          height: 'MOCK TARGET HEIGHT'
-        }
-      }
-    }
-
-    beforeEach(() => {
-      global.window = {
-        innerWidth: 'MOCK INNER WIDTH',
-        innerHeight: 'MOCK INNER HEIGHT'
-      }
-
-      global.document = {
-        scrollingElement: {
-          scrollLeft: 'MOCK SCROLL LEFT',
-          scrollTop: 'MOCK SCROLL TOP'
-        }
-      }
-    })
-
-    afterEach(() => {
-      delete global.window
-      delete global.document
-    })
-
-    it('returns an object', () => {
-      return (
-        expect(createRects(mockContainer, mockTarget))
-          .to.eql({
-            viewport: {
-              top: 'MOCK SCROLL TOP',
-              right: 'MOCK SCROLL LEFTMOCK INNER WIDTH',
-              bottom: 'MOCK SCROLL TOPMOCK INNER HEIGHT',
-              left: 'MOCK SCROLL LEFT',
-              width: 'MOCK INNER WIDTH',
-              height: 'MOCK INNER HEIGHT'
-            },
-            container: {
-              left: 'MOCK SCROLL LEFTMOCK CONTAINER X',
-              top: 'MOCK SCROLL TOPMOCK CONTAINER Y',
-              width: 'MOCK CONTAINER WIDTH',
-              height: 'MOCK CONTAINER HEIGHT',
-              right: 'MOCK SCROLL LEFTMOCK CONTAINER XMOCK CONTAINER WIDTH',
-              bottom: 'MOCK SCROLL TOPMOCK CONTAINER YMOCK CONTAINER HEIGHT'
-            },
-            target: {
-              left: 'MOCK SCROLL LEFTMOCK TARGET X',
-              top: 'MOCK SCROLL TOPMOCK TARGET Y',
-              width: 'MOCK TARGET WIDTH',
-              height: 'MOCK TARGET HEIGHT',
-              right: 'MOCK SCROLL LEFTMOCK TARGET XMOCK TARGET WIDTH',
-              bottom: 'MOCK SCROLL TOPMOCK TARGET YMOCK TARGET HEIGHT'
-            }
-          })
-      )
-    })
-  })
-
   describe('Container is shorter than the Window', () => {
-    const rects = {
-      viewport: {
-        top: 0,
-        right: 1440,
-        bottom: 900,
-        left: 0,
-        width: 1440,
-        height: 900
-      },
-      container: {
-        x: 0,
-        y: 90,
-        top: 90,
-        right: 1440,
-        bottom: 810,
-        left: 0,
-        width: 1440,
-        height: 720
-      },
-      target: {
-        width: 50,
-        height: 50
-      }
+    const mockViewportRect = {
+      top: 0,
+      right: 1440,
+      bottom: 900,
+      left: 0,
+      width: 1440,
+      height: 900
     }
+
+    const mockContainerRect = {
+      x: 0,
+      y: 90,
+      top: 90,
+      right: 1440,
+      bottom: 810,
+      left: 0,
+      width: 1440,
+      height: 720
+    }
+
+    describe('`calculateX()`', () => {
+      const rects = {
+        viewport: mockViewportRect,
+        container: mockContainerRect,
+        target: {
+          left: 50,
+          top: 50,
+          width: 50,
+          height: 50
+        }
+      }
+
+      /**
+       *  Window is 1440 x 900
+       *  Header is 1440 x 90
+       *  Container is 1440 x 720
+       *  Footer is 1440 x 90
+       *  Target is 50 x 50 at 50 x 50
+       *  ViewBox is 1440 x 720
+       */
+      it('returns a number', () => {
+        /**
+         *  (((50 + (50 / 2)) - (1440 / 2)) * 0.5) / 1.3888
+         */
+        return (
+          expect(calculateX(rects, 1440, 1.3888))
+            .to.equal(-443.43317972350223)
+        )
+      })
+    })
+
+    describe('`calculateY()`', () => {
+      const rects = {
+        viewport: mockViewportRect,
+        container: mockContainerRect,
+        target: {
+          left: 50,
+          top: 50,
+          width: 50,
+          height: 50
+        }
+      }
+
+      /**
+       *  Window is 1440 x 900
+       *  Header is 1440 x 90
+       *  Container is 1440 x 720
+       *  Footer is 1440 x 90
+       *  Target is 50 x 50 at 50 x 50
+       *  ViewBox is 1440 x 720
+       */
+      it('returns a number', () => {
+        /**
+         *  (((50 + (50 / 2)) - (720 / 2)) * 0.5) / 1.3888
+         */
+        return (
+          expect(calculateY(rects, 720, 1.3888))
+            .to.equal(-184.21658986175112)
+        )
+      })
+    })
 
     describe('`calculateLeft()`', () => {
+      const rects = {
+        viewport: mockViewportRect,
+        container: mockContainerRect,
+        target: {
+          width: 50,
+          height: 50
+        }
+      }
+
       /**
        *  Window is 1440 x 900
        *  Header is 1440 x 90
@@ -654,6 +523,15 @@ describe('`center-center`', () => {
     })
 
     describe('`calculateTop()`', () => {
+      const rects = {
+        viewport: mockViewportRect,
+        container: mockContainerRect,
+        target: {
+          width: 50,
+          height: 50
+        }
+      }
+
       /**
        *  Window is 1440 x 900
        *  Header is 1440 x 90
@@ -674,32 +552,98 @@ describe('`center-center`', () => {
   })
 
   describe('Container is taller than the Window', () => {
-    const rects = {
-      viewport: {
-        top: 0,
-        right: 1440,
-        bottom: 900,
-        left: 0,
-        width: 1440,
-        height: 900
-      },
-      container: {
-        x: 0,
-        y: 90,
-        top: 90,
-        right: 1440,
-        bottom: 1080,
-        left: 0,
-        width: 1440,
-        height: 990
-      },
-      target: {
-        width: 50,
-        height: 50
-      }
+    const mockViewportRect = {
+      top: 0,
+      right: 1440,
+      bottom: 900,
+      left: 0,
+      width: 1440,
+      height: 900
     }
 
+    const mockContainerRect = {
+      x: 0,
+      y: 90,
+      top: 90,
+      right: 1440,
+      bottom: 1080,
+      left: 0,
+      width: 1440,
+      height: 990
+    }
+
+    describe('`calculateX()`', () => {
+      const rects = {
+        viewport: mockViewportRect,
+        container: mockContainerRect,
+        target: {
+          left: 50,
+          top: 50,
+          width: 50,
+          height: 50
+        }
+      }
+
+      /**
+       *  Window is 1440 x 900
+       *  Header is 1440 x 90
+       *  Container is 1440 x 990
+       *  Footer is 1440 x 90
+       *  Target is 50 x 50 at 50 x 50
+       *  ViewBox is 1440 x 990
+       */
+      it('returns a number', () => {
+        /**
+         *  (((50 + (50 / 2)) - (1440 / 2)) * 0.5) / 1.3888
+         */
+        return (
+          expect(calculateX(rects, 1440, 1.3888))
+            .to.equal(-443.43317972350223)
+        )
+      })
+    })
+
+    describe('`calculateY()`', () => {
+      const rects = {
+        viewport: mockViewportRect,
+        container: mockContainerRect,
+        target: {
+          left: 50,
+          top: 50,
+          width: 50,
+          height: 50
+        }
+      }
+
+      /**
+       *  Window is 1440 x 900
+       *  Header is 1440 x 90
+       *  Container is 1440 x 990
+       *  Footer is 1440 x 90
+       *  Target is 50 x 50 at 50 x 50
+       *  ViewBox is 1440 x 990
+       */
+      it('returns a number', () => {
+        /**
+         *  (((50 + (50 / 2)) - (990 / 2)) * 0.5) / 1.3888
+         */
+        return (
+          expect(calculateY(rects, 990, 1.3888))
+            .to.equal(-216.61866359447004)
+        )
+      })
+    })
+
     describe('`calculateLeft()`', () => {
+      const rects = {
+        viewport: mockViewportRect,
+        container: mockContainerRect,
+        target: {
+          width: 50,
+          height: 50
+        }
+      }
+
       /**
        *  Window is 1440 x 900
        *  Header is 1440 x 90
@@ -719,6 +663,15 @@ describe('`center-center`', () => {
     })
 
     describe('`calculateTop()`', () => {
+      const rects = {
+        viewport: mockViewportRect,
+        container: mockContainerRect,
+        target: {
+          width: 50,
+          height: 50
+        }
+      }
+
       /**
        *  Window is 1440 x 900
        *  Header is 1440 x 90
