@@ -7,7 +7,10 @@
 			{
 				"imports": {
 					"debug": "https://esm.sh/debug",
-					"center-center": "/assets/index.mjs"
+					"center-center": "/assets/index.mjs",
+					"#center-center/common": "/assets/common/index.mjs",
+					"#center-center/dom": "/assets/dom/index.mjs",
+					"#center-center/svg": "/assets/svg/index.mjs"
 				}
 			}
 		</script>
@@ -15,7 +18,7 @@
 			import debug from 'debug'
 
 			import {
-				createDOMRects,
+				createRects,
 				calculateLeft,
 				calculateTop
 			} from 'center-center'
@@ -73,7 +76,7 @@
 				log('render')
 
 				window.requestAnimationFrame(() => {
-					const rects = createDOMRects(container, target)
+					const rects = createRects(container, target)
 					const left = calculateLeft(rects)
 					const top = calculateTop(rects)
 

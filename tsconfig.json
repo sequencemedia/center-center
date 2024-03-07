@@ -5,10 +5,28 @@
     "emitDeclarationOnly": true,
     "declarationMap": true,
     "strictNullChecks": true,
-    "removeComments": true
+    "removeComments": true,
+    "paths": {
+      "#center-center": [
+        "./src/index.mjs"
+      ],
+      "#center-center/common": [
+        "./src/common/index.mjs"
+      ],
+      "#center-center/dom": [
+        "./src/dom/index.mjs"
+      ],
+      "#center-center/svg": [
+        "./src/svg/index.mjs"
+      ]
+    }
   },
   "include": [
     "./*.mjs",
-    "./*.mts"
+    "./*.mts",
+    "./src/*.mjs",
+    "./src/*.mts",
+    "./src/**/*.mjs",
+    "./src/**/*.mts"
   ]
 }

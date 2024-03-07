@@ -2,9 +2,9 @@
   "name": "center-center",
   "version": "0.0.41",
   "description": "Position an element at the center center of a container",
-  "main": "./index.mjs",
+  "main": "./src/index.mjs",
   "type": "module",
-  "types": "./index.d.mts",
+  "types": "./src/index.d.mts",
   "author": {
     "name": "Jonathan Perry for Sequence Media Limited",
     "email": "sequencemedia@sequencemedia.net",
@@ -52,6 +52,15 @@
     "typescript": "^5.4.2"
   },
   "imports": {
-    "#center-center": "./index.mjs"
+    "#center-center/common": "./src/common/index.mjs",
+    "#center-center/dom": "./src/dom/index.mjs",
+    "#center-center/svg": "./src/svg/index.mjs",
+    "#center-center": "./src/index.mjs"
+  },
+  "exports": {
+    "./common": "./src/common/index.mjs",
+    "./dom": "./src/dom/index.mjs",
+    "./svg": "./src/svg/index.mjs",
+    ".": "./src/index.mjs"
   }
 }
