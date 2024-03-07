@@ -60,6 +60,7 @@
   "exports": {
     "./common": "./src/common/index.mjs",
     "./dom": "./src/dom/index.mjs",
+    "./svg/view-box": "./src/svg/view-box/index.mjs",
     "./svg": "./src/svg/index.mjs",
     ".": "./src/index.mjs"
   }
