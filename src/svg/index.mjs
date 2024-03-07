@@ -1,6 +1,4 @@
 /**
- * @typedef {import('../common/index.mjs').ScrollingElement} ScrollingElement
- * @typedef {import('../common/index.mjs').CenterCenterRect} CenterCenterRect
  * @typedef {import('../common/index.mjs').CenterCenterRects} CenterCenterRects
  */
 

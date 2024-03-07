@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    "outDir": "./lib",
+    "module": "nodenext",
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "declarationMap": true,
     "strictNullChecks": true,
-    "removeComments": true,
     "paths": {
       "#center-center": [
         "./src/index.mjs"
