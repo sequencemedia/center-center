@@ -1,11 +1,13 @@
-export type {
-  ScrollingElement,
-  CenterCenterRects,
-  CenterCenterRect
-} from '#center-center/common'
+declare module 'center-center' {
+  export type {
+    ScrollingElement,
+    CenterCenterRects,
+    CenterCenterRect
+  } from 'center-center/common'
 
-export {
-  createRects,
-  calculateLeft,
-  calculateTop
-} from '#center-center'
+  export {
+    createRects,
+    calculateLeft,
+    calculateTop
+  } from '#center-center'
+}

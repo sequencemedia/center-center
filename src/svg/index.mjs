@@ -1,5 +1,5 @@
 /**
- * @typedef {import('../common/index.mjs').CenterCenterRects} CenterCenterRects
+ * @typedef {import('center-center/common').CenterCenterRects} CenterCenterRects
  */
 
 import {

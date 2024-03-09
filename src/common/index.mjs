@@ -1,7 +1,7 @@
 /**
- * @typedef {import('./index.mjs').ScrollingElement} ScrollingElement
- * @typedef {import('./index.mjs').CenterCenterRect} CenterCenterRect
- * @typedef {import('./index.mjs').CenterCenterRects} CenterCenterRects
+ * @typedef {import('center-center/common').ScrollingElement} ScrollingElement
+ * @typedef {import('center-center/common').CenterCenterRect} CenterCenterRect
+ * @typedef {import('center-center/common').CenterCenterRects} CenterCenterRects
  */
 
 /**
@@ -104,7 +104,10 @@ export function createSVGElementRect (element) {
 }
 
 /**
- * Creates `Rects` for the viewport as well as the DOM container and DOM target elements
+ * Creates a collection of `Rects` describing
+ *  1. The viewport
+ *  2. The DOM container element
+ *  3. The DOM target element
  *
  * @param {Element} container
  * @param {Element} target
@@ -119,7 +122,10 @@ export function createDOMRects (container, target) {
 }
 
 /**
- * Creates `Rects` for the viewport as well as the DOM container and SVG target elements
+ * Creates a collection of `Rects` describing
+ *  1. The viewport
+ *  2. The DOM container element
+ *  3. The SVG target element
  *
  * @param {Element} container
  * @param {SVGElement} target
@@ -174,7 +180,7 @@ export function getRectHeight ({ height }) {
 }
 
 /**
- * Destructures the viewport `Rect`
+ * Destructures the viewport `Rect` from a collection of `Rects`
  *
  * @param {CenterCenterRects} rects
  * @returns {CenterCenterRect}
@@ -184,7 +190,7 @@ export function getViewportRect ({ viewport }) {
 }
 
 /**
- * Destructures the container `Rect`
+ * Destructures the container `Rect` from a collection of `Rects`
  *
  * @param {CenterCenterRects} rects
  * @returns {CenterCenterRect}
@@ -194,7 +200,7 @@ export function getContainerRect ({ container }) {
 }
 
 /**
- * Destructures the target `Rect`
+ * Destructures the target `Rect` from a collection of `Rects`
  *
  * @param {CenterCenterRects} rects
  * @returns {CenterCenterRect}
@@ -206,7 +212,7 @@ export function getTargetRect ({ target }) {
 /**
  * Calculates the `x` coordinate of a `Rect`
  *
- * @param {CenterCenterRect}
+ * @param {CenterCenterRect} rect
  * @returns {number}
  */
 export function calculateRectX ({ left: l, width: w }) {
@@ -216,7 +222,7 @@ export function calculateRectX ({ left: l, width: w }) {
 /**
  * Calculates the `y` coordinate of a `Rect`
  *
- * @param {CenterCenterRect}
+ * @param {CenterCenterRect} rect
  * @returns {number}
  */
 export function calculateRectY ({ top: t, height: h }) {
@@ -226,7 +232,7 @@ export function calculateRectY ({ top: t, height: h }) {
 /**
  * Calculates the right-most boundary `x` coordinate of the target in the container
  *
- * The range for target `x` is from left-most 0 to right-most boundary, inclusive
+ * The range is inclusive from left-most 0 to right-most boundary `x`
  *
  * @param {CenterCenterRects} rects
  * @returns {number}
@@ -241,7 +247,7 @@ export function calculateBoundaryX (rects) {
 /**
  * Calculates the bottom-most boundary `y` coordinate of the target in the container
  *
- * The range for target `y` is from top-most 0 to bottom-most boundary, inclusive
+ * The range is inclusive from top-most 0 to bottom-most boundary `y`
  *
  * @param {CenterCenterRects} rects
  * @returns {number}

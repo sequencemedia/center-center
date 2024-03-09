@@ -1,12 +1,12 @@
 /**
  *  An `<svg />` is of type `Element`
  *
- *  Its children are of `SVGElement`
+ *  Its children are of type `SVGElement`
  */
 
 import debug from 'debug'
 
-const log = debug('center-center:view-box')
+const log = debug('center-center:svg:view-box')
 
 export const X = 0
 export const Y = 1
@@ -31,9 +31,9 @@ function toRound (s) {
  * @param {Element} svg
  * @returns {number}
  */
-export function getViewBoxXFor (svg) {
+export function getXFor (svg) {
   return (
-    getViewBoxX(getViewBox(svg))
+    getX(getViewBox(svg))
   )
 }
 
@@ -43,9 +43,9 @@ export function getViewBoxXFor (svg) {
  * @param {Element} svg
  * @returns {number}
  */
-export function getViewBoxYFor (svg) {
+export function getYFor (svg) {
   return (
-    getViewBoxY(getViewBox(svg))
+    getY(getViewBox(svg))
   )
 }
 
@@ -55,9 +55,9 @@ export function getViewBoxYFor (svg) {
  * @param {Element} svg
  * @returns {number}
  */
-export function getViewBoxWFor (svg) {
+export function getWFor (svg) {
   return (
-    getViewBoxW(getViewBox(svg))
+    getW(getViewBox(svg))
   )
 }
 
@@ -67,9 +67,9 @@ export function getViewBoxWFor (svg) {
  * @param {Element} svg
  * @returns {number}
  */
-export function getViewBoxHFor (svg) {
+export function getHFor (svg) {
   return (
-    getViewBoxH(getViewBox(svg))
+    getH(getViewBox(svg))
   )
 }
 
@@ -79,9 +79,7 @@ export function getViewBoxHFor (svg) {
  * @param {number[]}
  * @returns {number}
  */
-export function getViewBoxX ({
-  [X]: x = 0
-}) {
+export function getX ({ [X]: x = 0 }) {
   return x
 }
 
@@ -91,7 +89,7 @@ export function getViewBoxX ({
  * @param {number[]}
  * @returns {number}
  */
-export function getViewBoxY ({ [Y]: y = 0 }) {
+export function getY ({ [Y]: y = 0 }) {
   return y
 }
 
@@ -101,7 +99,7 @@ export function getViewBoxY ({ [Y]: y = 0 }) {
  * @param {number[]}
  * @returns {number}
  */
-export function getViewBoxW ({ [W]: w = 0 }) {
+export function getW ({ [W]: w = 0 }) {
   return w
 }
 
@@ -111,7 +109,7 @@ export function getViewBoxW ({ [W]: w = 0 }) {
  * @param {number[]}
  * @returns {number}
  */
-export function getViewBoxH ({ [H]: h = 0 }) {
+export function getH ({ [H]: h = 0 }) {
   return h
 }
 

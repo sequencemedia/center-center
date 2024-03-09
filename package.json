@@ -24,7 +24,6 @@
     "lint:mts:fix": "npm run lint:mts -- --fix",
     "test": "cross-env NODE_ENV=test mocha test --recursive",
     "prepare": "husky",
-    "types": "tsc",
     "start": "DEBUG=center-center* nodemon docs/index.mjs --watch ."
   },
   "dependencies": {
@@ -36,6 +35,7 @@
     "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-env": "^7.24.0",
     "@sequencemedia/hooks": "^1.0.483",
+    "@types/debug": "^4.1.12",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "chai": "^5.1.0",
