@@ -137,7 +137,7 @@ describe('`center-center/svg`', () => {
          */
         return (
           expect(calculateX(rects, 1440, 1.3888))
-            .to.equal(-443.43317972350223)
+            .to.equal(443.43317972350223)
         )
       })
     })
@@ -168,7 +168,7 @@ describe('`center-center/svg`', () => {
          */
         return (
           expect(calculateY(rects, 720, 1.3888))
-            .to.equal(-184.21658986175112)
+            .to.equal(184.21658986175112)
         )
       })
     })
@@ -221,7 +221,7 @@ describe('`center-center/svg`', () => {
          */
         return (
           expect(calculateX(rects, 1440, 1.3888))
-            .to.equal(-443.43317972350223)
+            .to.equal(443.43317972350223)
         )
       })
     })
@@ -252,7 +252,7 @@ describe('`center-center/svg`', () => {
          */
         return (
           expect(calculateY(rects, 990, 1.3888))
-            .to.equal(-216.61866359447004)
+            .to.equal(216.61866359447004)
         )
       })
     })

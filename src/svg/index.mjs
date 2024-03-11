@@ -26,14 +26,13 @@ export {
  * @returns {number}
  */
 export function calculateX (rects, viewBoxW = 0, scale = 1) {
-  const targetX = calculateRectX(getTargetRect(rects))
-  const containerX = calculateContainerX(rects)
   const w = getRectWidth(getContainerRect(rects))
   const ratio = (viewBoxW / w)
+  const containerX = calculateContainerX(rects)
+  const targetX = calculateRectX(getTargetRect(rects))
+  const x = (targetX - ((containerX * ratio) / scale))
 
-  return (
-    targetX - ((containerX * ratio) / scale)
-  )
+  return (-x)
 }
 
 /**
@@ -45,12 +44,11 @@ export function calculateX (rects, viewBoxW = 0, scale = 1) {
  * @returns {number}
  */
 export function calculateY (rects, viewBoxH = 0, scale = 1) {
-  const targetY = calculateRectY(getTargetRect(rects))
-  const containerY = calculateContainerY(rects)
   const h = getRectHeight(getContainerRect(rects))
   const ratio = (viewBoxH / h)
+  const containerY = calculateContainerY(rects)
+  const targetY = calculateRectY(getTargetRect(rects))
+  const y = (targetY - ((containerY * ratio) / scale))
 
-  return (
-    targetY - ((containerY * ratio) / scale)
-  )
+  return (-y)
 }
