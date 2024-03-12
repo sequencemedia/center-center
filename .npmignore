@@ -24,6 +24,9 @@ babel.config.cjs
 # Test
 test
 
+# Docs
+docs
+
 # Typescript
 tsconfig.json
 jsconfig.json
