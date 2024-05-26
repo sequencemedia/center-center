@@ -17,14 +17,14 @@
   },
   "scripts": {
     "lint": "run-s lint:mjs lint:mts",
-    "lint:mjs": "eslint . --ext .mjs,.cjs",
-    "lint:mts": "eslint . --ext .mts,.cts",
     "lint:fix": "run-s lint:mjs:fix lint:mts:fix",
+    "lint:mjs": "eslint . --ext .mjs,.cjs",
     "lint:mjs:fix": "npm run lint:mjs -- --fix",
+    "lint:mts": "eslint . --ext .mts,.cts",
     "lint:mts:fix": "npm run lint:mts -- --fix",
-    "test": "cross-env NODE_ENV=test mocha test --recursive",
     "prepare": "husky",
-    "start": "DEBUG=center-center* nodemon docs/index.mjs --watch ."
+    "start": "DEBUG=center-center* nodemon docs/index.mjs --watch .",
+    "test": "cross-env NODE_ENV=test mocha test --recursive"
   },
   "dependencies": {
     "debug": "^4.3.4"
@@ -34,7 +34,7 @@
     "@babel/core": "^7.24.6",
     "@babel/eslint-parser": "^7.24.6",
     "@babel/preset-env": "^7.24.6",
-    "@sequencemedia/hooks": "^1.0.491",
+    "@sequencemedia/hooks": "^1.0.492",
     "@types/debug": "^4.1.12",
     "@typescript-eslint/eslint-plugin": "^7.10.0",
     "@typescript-eslint/parser": "^7.10.0",
@@ -47,21 +47,21 @@
     "express": "^5.0.0-beta.2",
     "husky": "^9.0.11",
     "mocha": "^10.4.0",
-    "nodemon": "^3.1.0",
+    "nodemon": "^3.1.1",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.4.5"
   },
   "imports": {
+    "#center-center": "./src/index.mjs",
     "#center-center/common": "./src/common/index.mjs",
     "#center-center/dom": "./src/dom/index.mjs",
-    "#center-center/svg": "./src/svg/index.mjs",
-    "#center-center": "./src/index.mjs"
+    "#center-center/svg": "./src/svg/index.mjs"
   },
   "exports": {
+    ".": "./src/index.mjs",
     "./common": "./src/common/index.mjs",
     "./dom": "./src/dom/index.mjs",
-    "./svg/view-box": "./src/svg/view-box/index.mjs",
     "./svg": "./src/svg/index.mjs",
-    ".": "./src/index.mjs"
+    "./svg/view-box": "./src/svg/view-box/index.mjs"
   }
 }
