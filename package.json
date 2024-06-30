@@ -10,7 +10,7 @@
     "email": "sequencemedia@sequencemedia.net",
     "url": "http://sequencemedia.net"
   },
-  "license": "MIT",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sequencemedia/center-center.git"
