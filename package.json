@@ -1,6 +1,6 @@
 {
   "name": "center-center",
-  "version": "0.0.83",
+  "version": "0.0.84",
   "description": "Position an element at the center center of a container",
   "main": "./src/index.mjs",
   "type": "module",
