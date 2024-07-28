@@ -27,7 +27,7 @@
     "test": "cross-env NODE_ENV=test mocha test --recursive"
   },
   "dependencies": {
-    "debug": "^4.3.5"
+    "debug": "^4.3.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
