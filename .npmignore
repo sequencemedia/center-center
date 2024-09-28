@@ -21,6 +21,9 @@ babel.config.cjs
 # Deps
 .depsrc
 
+# Hooks
+.husky/hooks
+
 # Test
 test
 
