@@ -37,7 +37,7 @@
     "@types/debug": "^4.1.12",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
-    "chai": "^5.1.1",
+    "chai": "^5.1.2",
     "core-js": "^3.38.1",
     "cross-env": "^7.0.3",
     "eslint": "8.57.0",
