@@ -11,6 +11,7 @@
 babel.config.cjs
 
 .gitattributes
+.gitignore
 
 # User-defined NPM configuration
 .npmrc
