@@ -1,6 +1,6 @@
 declare module 'center-center/dom' {
-  import {
-    type CenterCenterRects
+  import type {
+    CenterCenterRects
   } from 'center-center/common'
 
   export function createRects (container: Element, target: Element): CenterCenterRects

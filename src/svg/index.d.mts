@@ -1,6 +1,6 @@
 declare module 'center-center/svg' {
-  import {
-    type CenterCenterRects
+  import type {
+    CenterCenterRects
   } from 'center-center/common'
 
   export function createRects (container: Element, target: SVGElement): CenterCenterRects
