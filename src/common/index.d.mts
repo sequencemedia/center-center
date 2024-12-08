@@ -29,7 +29,7 @@ declare namespace CenterCenterTypes {
   }
 }
 
-declare module 'center-center/common' {
+declare module '#center-center/common' {
   export type ScrollingElement = CenterCenterTypes.ScrollingElement
   export type CenterCenterRect = CenterCenterTypes.CenterCenterRect
   export type CenterCenterRects = CenterCenterTypes.CenterCenterRects
@@ -37,9 +37,9 @@ declare module 'center-center/common' {
   export function getScrollingElement (): ScrollingElement
   export function createViewportRect (): CenterCenterRect
   export function createDOMElementRect (element: Element): CenterCenterRect
-  export function createSVGElementRect (element: SVGElement): CenterCenterRect
+  export function createSVGElementRect (element: SVGGraphicsElement): CenterCenterRect
   export function createDOMRects (container: Element, target: Element): CenterCenterRect
-  export function createSVGRects (container: Element, target: SVGElement): CenterCenterRect
+  export function createSVGRects (container: Element, target: SVGGraphicsElement): CenterCenterRect
 
   export function getRectLeft (rect: CenterCenterRect): number
   export function getRectTop (rect: CenterCenterRect): number
@@ -61,4 +61,8 @@ declare module 'center-center/common' {
 
   export function calculateTargetX (rects: CenterCenterRects): number
   export function calculateTargetY (rects: CenterCenterRects): number
+}
+
+declare module 'center-center/common' {
+  export * from '#center-center/common'
 }

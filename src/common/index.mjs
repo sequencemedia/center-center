@@ -82,7 +82,7 @@ export function createDOMElementRect (element) {
 /**
  * Creates a `Rect` for an SVG element
  *
- * @param {SVGElement} element
+ * @param {SVGGraphicsElement} element
  * @returns {CenterCenterRect}
 */
 export function createSVGElementRect (element) {
@@ -128,7 +128,7 @@ export function createDOMRects (container, target) {
  *  3. The SVG target element
  *
  * @param {Element} container
- * @param {SVGElement} target
+ * @param {SVGGraphicsElement} target
  * @returns {CenterCenterRects}
  */
 export function createSVGRects (container, target) {

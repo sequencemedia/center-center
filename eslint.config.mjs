@@ -1,43 +1,56 @@
 import globals from 'globals'
-import standard from '@sequencemedia/eslint-config-standard/merge'
-import typescript from '@sequencemedia/eslint-config-typescript/merge'
+
+import {
+  configs as standard
+} from '@sequencemedia/eslint-config-standard'
+
+import {
+  configs as typescript
+} from '@sequencemedia/eslint-config-typescript'
 
 export default [
-  ...standard({
+  {
+    ...standard.recommended,
     files: [
-      '**/*.{mjs,cjs}'
+      '**/*.{mjs,cjs,mts,cts}'
     ],
     ignores: [
       'test',
       'src'
     ],
     languageOptions: {
+      ...standard.recommended.languageOptions,
       globals: {
         ...globals.node
       }
     }
-  }),
-  ...standard({
+  },
+  {
+    ...standard.recommended,
     files: [
-      'src/**/*.{mjs,cjs}'
+      'src/**/*.{mjs,cjs,mts,cts}'
     ],
     languageOptions: {
+      ...standard.recommended.languageOptions,
       globals: {
         ...globals.browser
       }
     }
-  }),
-  ...standard({
+  },
+  {
+    ...standard.recommended,
     files: [
       'test/**/*.{mjs,cjs}'
     ],
     languageOptions: {
+      ...standard.recommended.languageOptions,
       globals: {
         ...globals.mocha
       }
     }
-  }),
-  ...typescript({
+  },
+  {
+    ...typescript.recommended,
     files: [
       '**/*.{mts,cts}'
     ],
@@ -46,29 +59,34 @@ export default [
       'src'
     ],
     languageOptions: {
+      ...typescript.recommended.languageOptions,
       globals: {
         ...globals.node
       }
     }
-  }),
-  ...typescript({
+  },
+  {
+    ...typescript.recommended,
     files: [
       'src/**/*.{mts,cts}'
     ],
     languageOptions: {
+      ...typescript.recommended.languageOptions,
       globals: {
         ...globals.browser
       }
     }
-  }),
-  ...typescript({
+  },
+  {
+    ...typescript.recommended,
     files: [
       'test/**/*.{mts,cts}'
     ],
     languageOptions: {
+      ...typescript.recommended.languageOptions,
       globals: {
         ...globals.mocha
       }
     }
-  })
+  }
 ]

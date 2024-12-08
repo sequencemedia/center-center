@@ -1,13 +1,17 @@
-declare module 'center-center' {
+declare module '#center-center' {
   export type {
     ScrollingElement,
     CenterCenterRects,
     CenterCenterRect
-  } from 'center-center/common'
+  } from '#center-center/common'
 
   export {
     createRects,
     calculateLeft,
     calculateTop
-  } from '#center-center'
+  } from '#center-center/dom'
+}
+
+declare module 'center-center' {
+  export * from '#center-center'
 }

@@ -1,33 +1,39 @@
 {
   "compilerOptions": {
-    "outDir": "./lib",
-    "module": "esnext",
+    "module": "NodeNext",
+    "target": "ESNext",
     "allowJs": true,
+    "checkJs": false,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "strict": true,
+    "isolatedModules": true,
+    "noImplicitAny": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "declarationMap": true,
     "strictNullChecks": true,
+    "baseUrl": ".",
     "paths": {
       "#center-center": [
-        "./src/index.mjs"
+        "src/index.mjs"
       ],
       "#center-center/common": [
-        "./src/common/index.mjs"
+        "src/common/index.mjs"
       ],
       "#center-center/dom": [
-        "./src/dom/index.mjs"
+        "src/dom/index.mjs"
       ],
       "#center-center/svg": [
-        "./src/svg/index.mjs"
+        "src/svg/index.mjs"
       ]
     }
   },
+  "exclude": [
+    "docs",
+    "test"
+  ],
   "include": [
-    "./*.mjs",
-    "./*.mts",
-    "./src/*.mjs",
-    "./src/*.mts",
-    "./src/**/*.mjs",
-    "./src/**/*.mts"
+    "src/**/*"
   ]
 }

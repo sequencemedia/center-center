@@ -1,4 +1,4 @@
-declare module 'center-center/svg/view-box' {
+declare module '#center-center/svg/view-box' {
   export const X: number
   export const Y: number
   export const W: number
@@ -15,4 +15,9 @@ declare module 'center-center/svg/view-box' {
   export function getH (viewBox: number[]): number
 
   export default function getViewBox (svg: Element): number[]
+}
+
+declare module 'center-center/svg/view-box' {
+  export { default } from '#center-center/svg/view-box'
+  export * from '#center-center/svg/view-box'
 }
