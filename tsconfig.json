@@ -29,11 +29,11 @@
       ]
     }
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "docs",
     "test"
-  ],
-  "include": [
-    "src/**/*"
   ]
 }
