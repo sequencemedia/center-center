@@ -10,8 +10,8 @@
  * @returns {ScrollingElement}
  */
 export function getScrollingElement () {
-  if (Reflect.has(document, 'scrollingElement')) {
-    const scrollingElement = Reflect.get(document, 'scrollingElement')
+  if ('scrollingElement' in document) { // (Reflect.has(document, 'scrollingElement')) {
+    const scrollingElement = document.scrollingElement // Reflect.get(document, 'scrollingElement')
     if (scrollingElement) return scrollingElement
   }
 
