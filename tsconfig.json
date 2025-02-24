@@ -3,7 +3,7 @@
     "module": "NodeNext",
     "target": "ESNext",
     "allowJs": true,
-    "checkJs": false,
+    "checkJs": true,
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "strict": true,
@@ -13,21 +13,7 @@
     "emitDeclarationOnly": true,
     "declarationMap": true,
     "strictNullChecks": true,
-    "baseUrl": ".",
-    "paths": {
-      "#center-center": [
-        "src/index.mjs"
-      ],
-      "#center-center/common": [
-        "src/common/index.mjs"
-      ],
-      "#center-center/dom": [
-        "src/dom/index.mjs"
-      ],
-      "#center-center/svg": [
-        "src/svg/index.mjs"
-      ]
-    }
+    "baseUrl": "."
   },
   "include": [
     "src/**/*"
