@@ -40,7 +40,7 @@ export default [
   {
     ...standard.recommended,
     files: [
-      'test/**/*.{mjs,cjs}'
+      'test/**/*.{mjs,cjs,mts,cts}'
     ],
     languageOptions: {
       ...standard.recommended.languageOptions,
