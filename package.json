@@ -26,8 +26,8 @@
     "debug": "^4.4.0"
   },
   "devDependencies": {
-    "@sequencemedia/eslint-config-standard": "^0.2.40",
-    "@sequencemedia/eslint-config-typescript": "^0.1.56",
+    "@sequencemedia/eslint-config-standard": "^0.2.41",
+    "@sequencemedia/eslint-config-typescript": "^0.1.57",
     "@sequencemedia/process": "^0.0.13",
     "@types/chai": "^5.2.0",
     "@types/debug": "^4.1.12",
@@ -35,7 +35,7 @@
     "@types/mocha": "^10.0.10",
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "express": "^4.21.2",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
