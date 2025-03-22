@@ -8,7 +8,7 @@ declare namespace CenterCenterTypes {
   }
 
   /**
-   * A Center Center `Rect`
+   *  A Center Center `Rect`
    */
   export interface CenterCenterRect {
     left: number
@@ -20,7 +20,7 @@ declare namespace CenterCenterTypes {
   }
 
   /**
-   * Center Center `Rects`
+   *  Center Center `Rects`
    */
   export interface CenterCenterRects {
     viewport: CenterCenterRect

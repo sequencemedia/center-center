@@ -1,5 +1,5 @@
 /**
- * @typedef {import('center-center/common').CenterCenterRects} CenterCenterRects
+ *  @typedef {import('center-center/common').CenterCenterRects} CenterCenterRects
  */
 
 import {
@@ -14,10 +14,10 @@ export {
 } from '#center-center/common'
 
 /**
- * Calculates the target `left` position
+ *  Calculates the target `left` position
  *
- * @param {CenterCenterRects} rects
- * @returns {number}
+ *  @param {CenterCenterRects} rects
+ *  @returns {number}
  */
 export function calculateLeft (rects) {
   const boundary = calculateBoundaryX(rects)
@@ -29,10 +29,10 @@ export function calculateLeft (rects) {
 }
 
 /**
- * Calculates the target `top` position
+ *  Calculates the target `top` position
  *
- * @param {CenterCenterRects} rects
- * @returns {number}
+ *  @param {CenterCenterRects} rects
+ *  @returns {number}
  */
 export function calculateTop (rects) {
   const boundary = calculateBoundaryY(rects)

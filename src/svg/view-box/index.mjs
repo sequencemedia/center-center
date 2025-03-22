@@ -14,10 +14,10 @@ export const W = 2
 export const H = 3
 
 /**
- * Transforms a string to a round number
+ *  Transforms a string to a round number
  *
- * @param {string} s
- * @returns {number}
+ *  @param {string} s
+ *  @returns {number}
  */
 function toRound (s) {
   return (
@@ -26,10 +26,10 @@ function toRound (s) {
 }
 
 /**
- * Get the number at position `H` for the SVG element `viewBox` attribute
+ *  Get the number at position `H` for the SVG element `viewBox` attribute
  *
- * @param {Element} svg
- * @returns {number}
+ *  @param {Element} svg
+ *  @returns {number}
  */
 export function getXFor (svg) {
   return (
@@ -38,10 +38,10 @@ export function getXFor (svg) {
 }
 
 /**
- * Get the number at position `H` for the SVG element `viewBox` attribute
+ *  Get the number at position `H` for the SVG element `viewBox` attribute
  *
- * @param {Element} svg
- * @returns {number}
+ *  @param {Element} svg
+ *  @returns {number}
  */
 export function getYFor (svg) {
   return (
@@ -50,10 +50,10 @@ export function getYFor (svg) {
 }
 
 /**
- * Get the number at position `H` for the SVG element `viewBox` attribute
+ *  Get the number at position `H` for the SVG element `viewBox` attribute
  *
- * @param {Element} svg
- * @returns {number}
+ *  @param {Element} svg
+ *  @returns {number}
  */
 export function getWFor (svg) {
   return (
@@ -62,10 +62,10 @@ export function getWFor (svg) {
 }
 
 /**
- * Get the number at position `H` for the SVG element `viewBox` attribute
+ *  Get the number at position `H` for the SVG element `viewBox` attribute
  *
- * @param {Element} svg
- * @returns {number}
+ *  @param {Element} svg
+ *  @returns {number}
  */
 export function getHFor (svg) {
   return (
@@ -74,50 +74,50 @@ export function getHFor (svg) {
 }
 
 /**
- * Get the number at position `X`
+ *  Get the number at position `X`
  *
- * @param {number[]}
- * @returns {number}
+ *  @param {number[]}
+ *  @returns {number}
  */
 export function getX ({ [X]: x = 0 }) {
   return x
 }
 
 /**
- * Get the number at position `Y`
+ *  Get the number at position `Y`
  *
- * @param {number[]}
- * @returns {number}
+ *  @param {number[]}
+ *  @returns {number}
  */
 export function getY ({ [Y]: y = 0 }) {
   return y
 }
 
 /**
- * Get the number at position `W`
+ *  Get the number at position `W`
  *
- * @param {number[]}
- * @returns {number}
+ *  @param {number[]}
+ *  @returns {number}
  */
 export function getW ({ [W]: w = 0 }) {
   return w
 }
 
 /**
- * Get the number at position `H`
+ *  Get the number at position `H`
  *
- * @param {number[]}
- * @returns {number}
+ *  @param {number[]}
+ *  @returns {number}
  */
 export function getH ({ [H]: h = 0 }) {
   return h
 }
 
 /**
- * Get an SVG element `viewBox` attribute as an array of numbers
+ *  Get an SVG element `viewBox` attribute as an array of numbers
  *
- * @param {Element} svg
- * @returns {number[]}
+ *  @param {Element} svg
+ *  @returns {number[]}
  */
 export default function getViewBox (svg) {
   log('getViewBox')

@@ -1,5 +1,5 @@
 /**
- * @typedef {import('center-center/common').CenterCenterRects} CenterCenterRects
+ *  @typedef {import('center-center/common').CenterCenterRects} CenterCenterRects
  */
 
 import {
@@ -18,12 +18,12 @@ export {
 } from '#center-center/common'
 
 /**
- * Calculates the target `x` position
+ *  Calculates the target `x` position
  *
- * @param {CenterCenterRects} rects
- * @param {number | undefined} viewBoxW
- * @param {number | undefined} scale
- * @returns {number}
+ *  @param {CenterCenterRects} rects
+ *  @param {number | undefined} viewBoxW
+ *  @param {number | undefined} scale
+ *  @returns {number}
  */
 export function calculateX (rects, viewBoxW = 0, scale = 1) {
   const w = getRectWidth(getContainerRect(rects))
@@ -36,12 +36,12 @@ export function calculateX (rects, viewBoxW = 0, scale = 1) {
 }
 
 /**
- * Calculates the target `y` position
+ *  Calculates the target `y` position
  *
- * @param {CenterCenterRects} rects
- * @param {number | undefined} viewBoxH
- * @param {number | undefined} scale
- * @returns {number}
+ *  @param {CenterCenterRects} rects
+ *  @param {number | undefined} viewBoxH
+ *  @param {number | undefined} scale
+ *  @returns {number}
  */
 export function calculateY (rects, viewBoxH = 0, scale = 1) {
   const h = getRectHeight(getContainerRect(rects))
