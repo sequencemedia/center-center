@@ -39,7 +39,7 @@
     "express": "^5.1.0",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
-    "mocha": "^11.1.0",
+    "mocha": "^11.2.2",
     "nodemon": "^3.1.10"
   },
   "imports": {
