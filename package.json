@@ -29,7 +29,7 @@
     "@sequencemedia/eslint-config-standard": "^0.2.52",
     "@sequencemedia/eslint-config-typescript": "^0.1.82",
     "@sequencemedia/process": "^0.0.21",
-    "@types/chai": "^5.2.1",
+    "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
     "@types/express": "^5.0.1",
     "@types/mocha": "^10.0.10",
