@@ -10,8 +10,8 @@
  *  @returns {ScrollingElement}
  */
 export function getScrollingElement () {
-  if ('scrollingElement' in document) { // (Reflect.has(document, 'scrollingElement')) {
-    const scrollingElement = document.scrollingElement // Reflect.get(document, 'scrollingElement')
+  if ('scrollingElement' in document) {
+    const scrollingElement = document.scrollingElement
     if (scrollingElement) return scrollingElement
   }
 
@@ -52,7 +52,7 @@ export function createViewportRect () {
  *
  *  @param {Element} element
  *  @returns {CenterCenterRect}
-*/
+ */
 export function createDOMElementRect (element) {
   const {
     scrollLeft,
@@ -84,7 +84,7 @@ export function createDOMElementRect (element) {
  *
  *  @param {SVGGraphicsElement} element
  *  @returns {CenterCenterRect}
-*/
+ */
 export function createSVGElementRect (element) {
   const {
     x: left,
