@@ -26,9 +26,9 @@
     "debug": "^4.4.1"
   },
   "devDependencies": {
-    "@sequencemedia/eslint-config-standard": "^0.2.77",
-    "@sequencemedia/eslint-config-typescript": "^0.1.135",
-    "@sequencemedia/process": "^0.0.31",
+    "@sequencemedia/eslint-config-standard": "^0.2.78",
+    "@sequencemedia/eslint-config-typescript": "^0.1.136",
+    "@sequencemedia/process": "^0.0.32",
     "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
     "@types/express": "^5.0.3",
@@ -39,7 +39,7 @@
     "express": "^5.1.0",
     "globals": "^16.3.0",
     "husky": "^9.1.7",
-    "mocha": "^11.7.1",
+    "mocha": "^11.7.2",
     "nodemon": "^3.1.10"
   },
   "imports": {
