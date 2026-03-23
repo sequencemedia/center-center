@@ -30,7 +30,7 @@
     "@sequencemedia/eslint-config-typescript": "^0.1.182",
     "@sequencemedia/process": "^0.0.57",
     "@types/chai": "^5.2.3",
-    "@types/debug": "^4.1.12",
+    "@types/debug": "^4.1.13",
     "@types/express": "^5.0.6",
     "@types/mocha": "^10.0.10",
     "chai": "^6.2.2",
