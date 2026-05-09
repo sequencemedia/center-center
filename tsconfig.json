@@ -10,7 +10,7 @@
     "baseUrl": "."
   },
   "include": [
-    "src/**/*"
+    "src"
   ],
   "exclude": [
     "docs",
