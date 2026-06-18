@@ -18,7 +18,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "prepare": "husky",
+    "prepare": "node husky.mjs",
     "start": "cross-env DEBUG=center-center* nodemon docs/index.mjs --watch .",
     "test": "cross-env NODE_ENV=test mocha test --recursive"
   },
