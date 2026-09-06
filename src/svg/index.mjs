@@ -21,8 +21,8 @@ export {
  *  Calculates the target `x` position
  *
  *  @param {CenterCenterRects} rects
- *  @param {number | undefined} viewBoxW
- *  @param {number | undefined} scale
+ *  @param {number} [viewBoxW]
+ *  @param {number} [scale]
  *  @returns {number}
  */
 export function calculateX (rects, viewBoxW = 0, scale = 1) {
@@ -39,8 +39,8 @@ export function calculateX (rects, viewBoxW = 0, scale = 1) {
  *  Calculates the target `y` position
  *
  *  @param {CenterCenterRects} rects
- *  @param {number | undefined} viewBoxH
- *  @param {number | undefined} scale
+ *  @param {number} [viewBoxH]
+ *  @param {number} [scale]
  *  @returns {number}
  */
 export function calculateY (rects, viewBoxH = 0, scale = 1) {
