@@ -27,9 +27,9 @@
     "debug": "^4.4.3"
   },
   "devDependencies": {
-    "@sequencemedia/eslint-config-standard": "^0.2.107",
-    "@sequencemedia/eslint-config-typescript": "^0.1.182",
-    "@sequencemedia/process": "^0.0.66",
+    "@sequencemedia/eslint-config-standard": "^0.2.125",
+    "@sequencemedia/eslint-config-typescript": "^0.1.217",
+    "@sequencemedia/process": "^0.0.67",
     "@types/chai": "^5.2.3",
     "@types/debug": "^4.1.13",
     "@types/express": "^5.0.6",
@@ -44,6 +44,9 @@
     "nodemon": "^3.1.14",
     "typescript": "6.0.3"
   },
+  "allowScripts": {
+    "fsevents@2.3.3": true
+  },
   "imports": {
     "#center-center": "./src/index.mjs",
     "#center-center/common": "./src/common/index.mjs",
@@ -56,8 +59,5 @@
     "./dom": "./src/dom/index.mjs",
     "./svg": "./src/svg/index.mjs",
     "./svg/view-box": "./src/svg/view-box/index.mjs"
-  },
-  "allowScripts": {
-    "fsevents@2.3.3": true
   }
 }
