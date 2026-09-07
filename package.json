@@ -23,6 +23,9 @@
     "test": "cross-env NODE_ENV=test mocha test --recursive",
     "type-check": "tsc --noEmit"
   },
+  "allowScripts": {
+    "fsevents@2.3.3": true
+  },
   "dependencies": {
     "debug": "^4.4.3"
   },
@@ -43,9 +46,6 @@
     "mocha": "^12.0.0",
     "nodemon": "^3.1.14",
     "typescript": "6.0.3"
-  },
-  "allowScripts": {
-    "fsevents@2.3.3": true
   },
   "imports": {
     "#center-center": "./src/index.mjs",
