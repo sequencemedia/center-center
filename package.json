@@ -32,7 +32,7 @@
   "devDependencies": {
     "@sequencemedia/eslint-config-standard": "0.3.2",
     "@sequencemedia/eslint-config-typescript": "0.2.3",
-    "@sequencemedia/process": "^0.0.76",
+    "@sequencemedia/process": "^0.0.77",
     "@types/chai": "^5.2.3",
     "@types/debug": "^4.1.13",
     "@types/express": "^5.0.6",
